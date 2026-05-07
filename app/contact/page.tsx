@@ -1,10 +1,3 @@
-import { generatePageMetadata } from '@/lib/generatePageMetadata'
-
-export const metadata = generatePageMetadata({
-  title: 'Contact Us',
-  description: 'Get in touch with OverstayCheck for questions about visa overstay and I-94 lookups',
-  path: '/contact',
-})
 export default function ContactPage() {
   return (
     <div className="container mx-auto px-4 py-8 max-w-2xl">
