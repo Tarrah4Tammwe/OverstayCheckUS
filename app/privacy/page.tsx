@@ -1,10 +1,3 @@
-import { generatePageMetadata } from '@/lib/generatePageMetadata'
-
-export const metadata = generatePageMetadata({
-  title: 'Privacy Policy',
-  description: 'Privacy policy for OverstayCheck. We protect your data and explain how we use information.',
-  path: '/privacy',
-})
 export default function PrivacyPage() {
   return (
     <div className="container mx-auto px-4 py-8 max-w-2xl">
