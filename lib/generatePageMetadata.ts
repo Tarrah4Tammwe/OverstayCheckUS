@@ -14,7 +14,7 @@ export function generatePageMetadata({
   keywords,
 }: PageMetadataProps): Metadata {
   const baseUrl = 'https://www.overstaycheck.com'
-  const fullUrl = `${baseUrl}${path}`
+const fullUrl = `${baseUrl}${path}`
 
   return {
     title: `${title} — OverstayCheck`,
