@@ -12,8 +12,12 @@ const nextConfig = {
         source: '/:path*',
         headers: [
           {
-            key: 'X-Canonical-URL',
-            value: 'https://www.overstaycheck.com/:path*',
+            key: 'X-Robots-Tag',
+            value: 'index, follow'
+          },
+          {
+            key: 'X-Frame-Options',
+            value: 'SAMEORIGIN'
           },
         ],
       },
@@ -21,15 +25,28 @@ const nextConfig = {
   },
   redirects: async () => {
     return [
+      // Remove www and force to non-www
       {
         source: '/:path*',
-        destination: 'https://www.overstaycheck.com/:path*',
-        basePath: false,
+        destination: 'https://overstaycheck.com/:path*',
         permanent: true,
         has: [
           {
             type: 'host',
-            value: 'overstaycheck.com',
+            value: 'www.overstaycheck.com',
+          },
+        ],
+      },
+      // Force HTTPS
+      {
+        source: '/:path*',
+        destination: 'https://overstaycheck.com/:path*',
+        permanent: true,
+        has: [
+          {
+            type: 'header',
+            key: 'x-forwarded-proto',
+            value: 'http'
           },
         ],
       },
