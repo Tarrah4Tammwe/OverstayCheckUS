@@ -4,7 +4,7 @@ export const metadata: Metadata = {
   title: 'Overstay Check - UK Visa & Overstay Calculator',
   description: 'Check if you\'re overstaying in the UK and understand your visa status',
   alternates: {
-    canonical: 'https://www.overstaycheck.com',
+    canonical: 'https://overstaycheck.com',
   },
 }
 
@@ -23,7 +23,7 @@ export default function RootLayout({
               '@context': 'https://schema.org',
               '@type': 'WebApplication',
               name: 'Overstay Check',
-              url: 'https://www.overstaycheck.com',
+              url: 'https://overstaycheck.com',
               description: 'Check if you\'re overstaying in the UK',
             }),
           }}
