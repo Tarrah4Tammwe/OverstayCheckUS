@@ -86,16 +86,25 @@ export function OverstayCalculator() {
   const [dateInput, setDateInput] = useState("")
   const [result, setResult] = useState<CalculationResult | null>(null)
   const [hasCalculated, setHasCalculated] = useState(false)
+  const [isCalculating, setIsCalculating] = useState(false)
 
   const handleCalculate = () => {
     if (!dateInput) return
     
-    const date = new Date(dateInput)
-    if (isNaN(date.getTime())) return
+    setIsCalculating(true)
     
-    const calculation = calculateOverstay(date)
-    setResult(calculation)
-    setHasCalculated(true)
+    setTimeout(() => {
+      const date = new Date(dateInput)
+      if (isNaN(date.getTime())) {
+        setIsCalculating(false)
+        return
+      }
+      
+      const calculation = calculateOverstay(date)
+      setResult(calculation)
+      setHasCalculated(true)
+      setIsCalculating(false)
+    }, 300)
   }
 
   const handleReset = () => {
@@ -103,6 +112,8 @@ export function OverstayCalculator() {
     setResult(null)
     setHasCalculated(false)
   }
+
+  const isButtonDisabled = !dateInput || isCalculating
 
   const tierColors = {
     safe: "bg-[var(--tier-safe)]",
@@ -136,7 +147,7 @@ export function OverstayCalculator() {
           
           <div className="flex flex-col sm:flex-row gap-3">
             <div className="relative flex-1">
-              <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
+              <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground pointer-events-none" />
               <Input
                 type="date"
                 value={dateInput}
@@ -147,10 +158,14 @@ export function OverstayCalculator() {
             </div>
             <Button 
               onClick={handleCalculate}
-              disabled={!dateInput}
-              className="h-12 px-8 bg-primary hover:bg-primary/90 text-primary-foreground font-semibold"
+              disabled={isButtonDisabled}
+              className={`h-12 px-8 font-semibold transition-all ${
+                isButtonDisabled 
+                  ? 'bg-muted text-muted-foreground cursor-not-allowed opacity-60' 
+                  : 'bg-primary hover:bg-primary/90 text-primary-foreground cursor-pointer'
+              }`}
             >
-              Calculate
+              {isCalculating ? 'Calculating...' : 'Calculate'}
             </Button>
           </div>
         </CardContent>
