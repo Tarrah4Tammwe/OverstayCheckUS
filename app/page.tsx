@@ -1,5 +1,6 @@
 import { OverstayCalculator } from "@/components/overstay-calculator"
-import { Scale, Shield, Clock, AlertCircle } from "lucide-react"
+import { Scale, Shield, Clock, AlertCircle, BookOpen } from "lucide-react"
+import Link from "next/link"
 import Script from "next/script"
 
 const faqSchema = {
@@ -82,8 +83,6 @@ export default function Home() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
 
-
-
       <main className="min-h-screen">
         <header className="border-b-2 border-secondary bg-card">
           <div className="max-w-4xl mx-auto px-4 py-4">
@@ -153,6 +152,62 @@ export default function Home() {
                 </p>
               </article>
             </div>
+          </div>
+        </section>
+
+        <section className="max-w-4xl mx-auto px-4 py-12" aria-label="Learning Guides">
+          <h2 className="text-2xl font-bold text-secondary text-center mb-8 flex items-center justify-center gap-2">
+            <BookOpen className="h-6 w-6 text-primary" />
+            Understanding Your Situation
+          </h2>
+          <p className="text-center text-muted-foreground mb-8 max-w-2xl mx-auto">
+            Our guides explain the rules, your options, and what happens next. Each guide is written in plain English without legal jargon.
+          </p>
+          <div className="grid md:grid-cols-2 gap-4">
+            <Link href="/what-is-i94" className="border-2 border-secondary rounded-lg p-5 bg-background hover:border-primary hover:bg-card transition-all">
+              <h3 className="font-bold text-secondary mb-2">→ What is an I-94 Visa?</h3>
+              <p className="text-sm text-muted-foreground">Understand the difference between your visa and your I-94, and where to find your "Admit Until Date".</p>
+            </Link>
+
+            <Link href="/i539-extension" className="border-2 border-secondary rounded-lg p-5 bg-background hover:border-primary hover:bg-card transition-all">
+              <h3 className="font-bold text-secondary mb-2">→ I-539 Extension Application</h3>
+              <p className="text-sm text-muted-foreground">How to file for more time in the US before your I-94 expires. Step-by-step guide.</p>
+            </Link>
+
+            <Link href="/tps-status-overstay" className="border-2 border-secondary rounded-lg p-5 bg-background hover:border-primary hover:bg-card transition-all">
+              <h3 className="font-bold text-secondary mb-2">→ TPS Status and Overstay</h3>
+              <p className="text-sm text-muted-foreground">How Temporary Protected Status affects overstay rules and what to do when TPS ends.</p>
+            </Link>
+
+            <Link href="/unlawful-presence" className="border-2 border-secondary rounded-lg p-5 bg-background hover:border-primary hover:bg-card transition-all">
+              <h3 className="font-bold text-secondary mb-2">→ Unlawful Presence vs. Overstay</h3>
+              <p className="text-sm text-muted-foreground">The legal difference and why it matters for your future immigration applications.</p>
+            </Link>
+
+            <Link href="/appeal-reentry-ban" className="border-2 border-secondary rounded-lg p-5 bg-background hover:border-primary hover:bg-card transition-all">
+              <h3 className="font-bold text-secondary mb-2">→ Appealing a Re-Entry Ban</h3>
+              <p className="text-sm text-muted-foreground">Ways to challenge a re-entry ban through family sponsorship or extreme hardship waivers.</p>
+            </Link>
+
+            <Link href="/travel-with-reentry-ban" className="border-2 border-secondary rounded-lg p-5 bg-background hover:border-primary hover:bg-card transition-all">
+              <h3 className="font-bold text-secondary mb-2">→ Travel with a Re-Entry Ban</h3>
+              <p className="text-sm text-muted-foreground">Where you can go, work, and live outside the US while under a re-entry ban.</p>
+            </Link>
+
+            <Link href="/airport-immigration-check" className="border-2 border-secondary rounded-lg p-5 bg-background hover:border-primary hover:bg-card transition-all">
+              <h3 className="font-bold text-secondary mb-2">→ Airport Immigration Check</h3>
+              <p className="text-sm text-muted-foreground">What to expect at the border and what CBP will ask about your overstay history.</p>
+            </Link>
+
+            <Link href="/uscis-overstay-records" className="border-2 border-secondary rounded-lg p-5 bg-background hover:border-primary hover:bg-card transition-all">
+              <h3 className="font-bold text-secondary mb-2">→ USCIS Overstay Records</h3>
+              <p className="text-sm text-muted-foreground">How to check your USCIS record and understand what they have on file about your overstay.</p>
+            </Link>
+
+            <Link href="/denied-entry-rights" className="border-2 border-secondary rounded-lg p-5 bg-background hover:border-primary hover:bg-card transition-all">
+              <h3 className="font-bold text-secondary mb-2">→ Denied Entry at the Border</h3>
+              <p className="text-sm text-muted-foreground">Your rights when CBP denies you entry and what to do next.</p>
+            </Link>
           </div>
         </section>
 
