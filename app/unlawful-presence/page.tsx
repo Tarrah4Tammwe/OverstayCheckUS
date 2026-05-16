@@ -3,7 +3,7 @@
 import Link from 'next/link'
 import { ArrowLeft, AlertCircle } from 'lucide-react'
 
-export default class UnlawfulPresencePage() {
+export default function UnlawfulPresencePage() {
   return (
     <main className="min-h-screen bg-background">
       <header className="border-b-2 border-secondary bg-card">
