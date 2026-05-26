@@ -1,4 +1,13 @@
-'use client'
+export const metadata: Metadata = {
+  title: 'I-539 Extension - Overstay Check',
+  description: 'How to extend your US stay with Form I-539. Filing deadlines, processing times, and what happens if it's denied.',
+  alternates: {
+    canonical: 'https://overstaycheck.com/i539-extension',
+  },
+}
+
+import type { Metadata } from 'next'
+
 
 import Link from 'next/link'
 import { ArrowLeft, AlertCircle, CheckCircle } from 'lucide-react'

@@ -1,3 +1,12 @@
+export const metadata: Metadata = {
+  title: 'Privacy Policy - Overstay Check',
+  description: 'Privacy policy for Overstay Check. How we handle your data.',
+  alternates: {
+    canonical: 'https://overstaycheck.com/privacy',
+  },
+}
+
+import type { Metadata } from 'next'
 export default function PrivacyPage() {
   return (
     <div className="container mx-auto px-4 py-8 max-w-2xl">

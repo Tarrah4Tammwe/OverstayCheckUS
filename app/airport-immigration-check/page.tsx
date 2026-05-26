@@ -1,7 +1,14 @@
-'use client'
-
+import type { Metadata } from 'next'
 import Link from 'next/link'
 import { ArrowLeft, AlertCircle } from 'lucide-react'
+
+export const metadata: Metadata = {
+  title: 'Airport Immigration Check - Overstay Check',
+  description: 'What happens at US airports if you have an overstay record. Learn how CBP checks your status and what to expect.',
+  alternates: {
+    canonical: 'https://overstaycheck.com/airport-immigration-check',
+  },
+}
 
 export default function AirportImmigrationPage() {
   return (

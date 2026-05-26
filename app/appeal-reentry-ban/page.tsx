@@ -1,7 +1,14 @@
-'use client'
-
+import type { Metadata } from 'next'
 import Link from 'next/link'
 import { ArrowLeft, AlertCircle } from 'lucide-react'
+
+export const metadata: Metadata = {
+  title: 'Appeal a Re-Entry Ban - Overstay Check',
+  description: 'How to appeal or waive a US re-entry ban after an overstay. I-601 waivers, timelines, and eligibility explained.',
+  alternates: {
+    canonical: 'https://overstaycheck.com/appeal-reentry-ban',
+  },
+}
 
 export default function AppealReentryBanPage() {
   return (

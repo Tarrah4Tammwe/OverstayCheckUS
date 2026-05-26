@@ -1,4 +1,13 @@
-'use client'
+export const metadata: Metadata = {
+  title: 'USCIS Overstay Records - Overstay Check',
+  description: 'How to check your USCIS records for overstay history. What information USCIS has about you.',
+  alternates: {
+    canonical: 'https://overstaycheck.com/uscis-overstay-records',
+  },
+}
+
+import type { Metadata } from 'next'
+
 
 import Link from 'next/link'
 import { ArrowLeft, AlertCircle } from 'lucide-react'

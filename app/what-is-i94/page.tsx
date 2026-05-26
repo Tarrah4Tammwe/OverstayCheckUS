@@ -1,4 +1,13 @@
-'use client'
+export const metadata: Metadata = {
+  title: 'What Is I-94 - Overstay Check',
+  description: 'What is Form I-94? How to read it, find your I-94 number, and check your departure date.',
+  alternates: {
+    canonical: 'https://overstaycheck.com/what-is-i94',
+  },
+}
+
+import type { Metadata } from 'next'
+
 
 import Link from 'next/link'
 import { ArrowLeft, AlertCircle } from 'lucide-react'

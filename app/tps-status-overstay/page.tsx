@@ -1,4 +1,13 @@
-'use client'
+export const metadata: Metadata = {
+  title: 'TPS Status and Overstay - Overstay Check',
+  description: 'Can you overstay while on TPS? What happens to your overstay when TPS expires.',
+  alternates: {
+    canonical: 'https://overstaycheck.com/tps-status-overstay',
+  },
+}
+
+import type { Metadata } from 'next'
+
 
 import Link from 'next/link'
 import { ArrowLeft, AlertCircle } from 'lucide-react'

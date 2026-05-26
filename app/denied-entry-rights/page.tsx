@@ -1,7 +1,14 @@
-'use client'
-
+import type { Metadata } from 'next'
 import Link from 'next/link'
 import { ArrowLeft, AlertCircle } from 'lucide-react'
+
+export const metadata: Metadata = {
+  title: 'Denied Entry Rights - Overstay Check',
+  description: 'Your rights when denied entry to the US at the airport. What to do if CBP denies you entry.',
+  alternates: {
+    canonical: 'https://overstaycheck.com/denied-entry-rights',
+  },
+}
 
 export default function DeniedEntryPage() {
   return (

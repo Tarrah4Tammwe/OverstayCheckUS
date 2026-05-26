@@ -1,4 +1,13 @@
-'use client'
+export const metadata: Metadata = {
+  title: 'Travel with a Re-Entry Ban - Overstay Check',
+  description: 'Can you travel internationally if you have a US re-entry ban? What happens if you try to return.',
+  alternates: {
+    canonical: 'https://overstaycheck.com/travel-with-reentry-ban',
+  },
+}
+
+import type { Metadata } from 'next'
+
 
 import Link from 'next/link'
 import { ArrowLeft, AlertCircle } from 'lucide-react'

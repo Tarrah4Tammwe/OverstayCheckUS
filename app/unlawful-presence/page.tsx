@@ -1,4 +1,13 @@
-'use client'
+export const metadata: Metadata = {
+  title: 'Unlawful Presence vs. Overstay - Overstay Check',
+  description: 'What is unlawful presence? How is it different from overstay? Consequences and how to fix it.',
+  alternates: {
+    canonical: 'https://overstaycheck.com/unlawful-presence',
+  },
+}
+
+import type { Metadata } from 'next'
+
 
 import Link from 'next/link'
 import { ArrowLeft, AlertCircle } from 'lucide-react'

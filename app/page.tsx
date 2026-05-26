@@ -1,7 +1,16 @@
+import type { Metadata } from 'next'
 import { OverstayCalculator } from "@/components/overstay-calculator"
 import { Scale, Shield, Clock, AlertCircle, BookOpen } from "lucide-react"
 import Link from "next/link"
 import Script from "next/script"
+
+export const metadata: Metadata = {
+  title: 'Overstay Check - US Visa Overstay Calculator',
+  description: 'Check if you\'re overstaying in the US and understand your visa status and re-entry bans. Free calculator with guides.',
+  alternates: {
+    canonical: 'https://overstaycheck.com',
+  },
+}
 
 const faqSchema = {
   "@context": "https://schema.org",
