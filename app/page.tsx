@@ -164,6 +164,66 @@ export default function Home() {
           </div>
         </section>
 
+        {/* ── EDITORIAL SECTION ── */}
+        <section className="max-w-4xl mx-auto px-4 py-14 border-t-2 border-secondary" aria-label="About US Visa Overstays">
+          <div className="prose prose-lg max-w-none">
+            <h2 className="text-2xl font-bold text-secondary mb-6">Understanding US Visa Overstays</h2>
+
+            <p className="text-muted-foreground leading-relaxed mb-5">
+              Millions of people enter the United States every year on temporary visas — tourist visas,
+              student visas, work visas, and visa waiver entries. Most leave on time. But circumstances
+              change: medical emergencies happen, flights get missed, family situations become complicated.
+              If your authorised stay ends and you are still in the US, you have overstayed — and the
+              consequences depend almost entirely on how many days have passed.
+            </p>
+
+            <h3 className="text-xl font-bold text-secondary mt-8 mb-4">The I-94 Is What Controls Your Stay</h3>
+            <p className="text-muted-foreground leading-relaxed mb-5">
+              The single most important thing to understand about US immigration is the difference between
+              your visa and your I-94. Your visa stamp gives you permission to travel to the US and request
+              entry. Your I-94 Arrival/Departure Record — issued electronically when you pass through customs
+              — sets the actual deadline for when you must leave. You can have a valid 10-year tourist visa
+              and still be overstaying if your I-94 expired. The visa is irrelevant once you are inside
+              the country; the I-94 date is what matters.
+            </p>
+            <p className="text-muted-foreground leading-relaxed mb-5">
+              You can check your current I-94 record online at i94.cbp.dhs.gov. Look for the field
+              labelled &ldquo;Admit Until Date.&rdquo; If that date has passed and you are still in the US, unlawful
+              presence is accumulating. Every day counts.
+            </p>
+
+            <h3 className="text-xl font-bold text-secondary mt-8 mb-4">How the Re-Entry Bans Work</h3>
+            <p className="text-muted-foreground leading-relaxed mb-5">
+              The US immigration system does not immediately punish overstayers while they remain inside
+              the country. The penalties activate when you leave and try to return. This is an important
+              distinction — but it is not a loophole. The clock is running whether you leave or not, and
+              the consequences of an extended overstay compound over time.
+            </p>
+            <p className="text-muted-foreground leading-relaxed mb-5">
+              Under 180 days of unlawful presence, no automatic re-entry ban triggers when you depart.
+              Your visa is voided and future visa applications will be affected, but you are not
+              automatically barred from returning. Between 180 and 364 days, a 3-year bar triggers the
+              moment you leave US soil. At 365 days or more, a 10-year bar applies. These are hard
+              thresholds — one day over each line moves you into the next category.
+            </p>
+
+            <h3 className="text-xl font-bold text-secondary mt-8 mb-4">What This Calculator Does</h3>
+            <p className="text-muted-foreground leading-relaxed mb-5">
+              This tool calculates your unlawful presence based on your I-94 expiry date and today&apos;s
+              date. It tells you exactly which threshold you are in, how many days remain before you
+              cross into a worse category, and what the consequences are if you leave now versus waiting.
+              It also flags situations where standard rules may not apply — pending extension applications,
+              TPS status, age exceptions, and asylum cases.
+            </p>
+            <p className="text-muted-foreground leading-relaxed mb-5">
+              This is a free informational tool. It does not store your data and does not require
+              registration. If your situation is complex — especially if you are close to a threshold,
+              have a pending application, or are considering adjustment of status — speak to a licensed
+              US immigration attorney before making any decisions about travel or departure.
+            </p>
+          </div>
+        </section>
+
         <section className="max-w-4xl mx-auto px-4 py-12" aria-label="Learning Guides">
           <h2 className="text-2xl font-bold text-secondary text-center mb-8 flex items-center justify-center gap-2">
             <BookOpen className="h-6 w-6 text-primary" />
