@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import AdUnit from '@/components/AdUnit'
 import { OverstayCalculator } from "@/components/overstay-calculator"
 import { Scale, Shield, Clock, AlertCircle, BookOpen } from "lucide-react"
 import Link from "next/link"
@@ -348,6 +349,10 @@ export default function Home() {
             </article>
           </div>
         </section>
+
+        <div className="max-w-4xl mx-auto px-4 py-6">
+          <AdUnit slot="2572172105" format="horizontal" />
+        </div>
 
         <section className="bg-muted border-t-2 border-secondary py-8" aria-label="Disclaimer">
           <div className="max-w-4xl mx-auto px-4">
