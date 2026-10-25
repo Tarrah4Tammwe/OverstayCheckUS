@@ -60,7 +60,8 @@ function calculate(expiry: Date): Result {
     }
   }
 
-  if (diff < 180) {
+  // The statute says "more than 180 days" (3-year bar) and "one year or more" (10-year bar).
+  if (diff <= 180) {
     return {
       daysOverstayed: diff,
       daysRemaining: 0,
@@ -68,9 +69,9 @@ function calculate(expiry: Date): Result {
       label: "No re-entry ban yet",
       headline: `${diff} day${diff === 1 ? "" : "s"} of unlawful presence.`,
       detail:
-        "No automatic re-entry ban applies if you leave now. Your visa is voided and future applications can still be affected. The 3-year threshold is the line to watch.",
-      next: { days: 180 - diff, label: "the 3-year ban threshold" },
-      progress: (diff / 180) * 100,
+        "No automatic re-entry bar applies if you leave now. Your visa is voided and future applications can still be affected. The 3-year range starts once you pass 180 days.",
+      next: { days: 181 - diff, label: "the 3-year bar range" },
+      progress: (diff / 181) * 100,
       steps: [
         { href: "/unlawful-presence", label: "Unlawful presence vs. overstay" },
         { href: "/i539-extension", label: "Late extensions and exceptions" },
@@ -88,8 +89,8 @@ function calculate(expiry: Date): Result {
       headline: `${diff} days of unlawful presence.`,
       detail:
         "If you leave the US now, a 3-year bar on re-entry is triggered when you depart. The bar starts on departure, not when the overstay began. At 365 days it becomes a 10-year bar.",
-      next: { days: 365 - diff, label: "the 10-year ban threshold" },
-      progress: ((diff - 180) / 185) * 100,
+      next: { days: 365 - diff, label: "the 10-year bar range" },
+      progress: ((diff - 181) / 184) * 100,
       steps: [
         { href: "/appeal-reentry-ban", label: "Waivers and ways to appeal a ban" },
         { href: "/travel-with-reentry-ban", label: "Life and travel under a ban" },
@@ -162,7 +163,12 @@ export function OverstayCalculator() {
           >
             i94.cbp.dhs.gov
           </a>
-          . Use this date, not the expiry on your visa stamp.
+          . Use this date, not the expiry on your visa stamp. If your I-94 says <strong>D/S</strong> (common for F-1 and
+          J-1), there is no date to enter and{' '}
+          <Link href="/what-is-i94#ds" className="font-medium text-primary underline underline-offset-2">
+            different rules apply
+          </Link>
+          .
         </p>
 
         <div className="mt-4 flex flex-col gap-3 sm:flex-row">
@@ -230,7 +236,7 @@ export function OverstayCalculator() {
                 </div>
                 <div className="mt-2 flex justify-between text-xs text-muted-foreground">
                   <span>Day 1</span>
-                  <span>180 · 3-year</span>
+                  <span>181 · 3-year</span>
                   <span>365 · 10-year</span>
                 </div>
               </div>

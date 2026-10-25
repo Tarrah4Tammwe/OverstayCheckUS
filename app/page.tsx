@@ -8,7 +8,10 @@ import { Callout } from '@/components/callout'
 import { guides, site } from '@/lib/site'
 
 export const metadata: Metadata = {
-  alternates: { canonical: site.domain },
+  alternates: {
+    canonical: site.domain,
+    languages: { 'en-US': 'https://overstaycheck.com', 'en-GB': 'https://www.overstaycheck.co.uk', 'x-default': 'https://overstaycheck.com' },
+  },
 }
 
 const faqSchema = {
@@ -20,7 +23,7 @@ const faqSchema = {
       name: "What is unlawful presence in the US?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "Unlawful presence is time spent in the US after your authorised stay expired — the date on your I-94, not your visa stamp. Once you accumulate more than 180 days of unlawful presence and leave the US, automatic re-entry bans apply.",
+        text: "Unlawful presence is time spent in the US after your authorised stay expired — the date on your I-94, not your visa stamp. Once you accumulate more than 180 days of unlawful presence and leave the US, a 3-year or 10-year bar on re-entry applies.",
       },
     },
     {
@@ -28,7 +31,7 @@ const faqSchema = {
       name: "How long can I overstay my US visa before getting banned?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "Under 180 days: no automatic entry ban, but your visa is voided. 180–364 days: a 3-year re-entry ban triggers when you leave. 365 days or more: a 10-year re-entry ban triggers when you leave.",
+        text: "180 days or fewer: no automatic re-entry bar, but your visa is voided. 181 to 364 days: a 3-year bar applies when you leave. 365 days or more: a 10-year bar applies when you leave.",
       },
     },
     {
@@ -52,7 +55,7 @@ const faqSchema = {
       name: "Can I fix a US visa overstay without leaving?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "Sometimes. If you have a qualifying US citizen or permanent resident spouse or parent, you may be able to adjust status without leaving. Filing a timely extension before your I-94 expired also stops the clock. An immigration attorney can advise on your options.",
+        text: "Sometimes. An immediate relative of a US citizen (a spouse, an unmarried child under 21, or a parent of a citizen aged 21 or over) who was inspected and admitted can usually apply for a green card without leaving the US. Because they never depart, the bars are not triggered. A timely filed extension before your I-94 expired also stops unlawful presence from accruing while it is pending. An immigration attorney can advise on your options.",
       },
     },
     {
@@ -65,10 +68,18 @@ const faqSchema = {
     },
     {
       "@type": "Question",
+      name: "My I-94 says D/S instead of a date. Does the calculator apply?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "No. D/S means duration of status, common for F-1 students and J-1 exchange visitors. There is no date to enter, and unlawful presence generally does not begin until USCIS makes a formal finding of a status violation or an immigration judge issues a decision. Speak to your school's designated official or an immigration attorney.",
+      },
+    },
+    {
+      "@type": "Question",
       name: "Does a pending I-539 extension application protect me from unlawful presence?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "Yes, if you filed a timely extension before your I-94 expired, unlawful presence does not accrue while it is pending. If the application is denied, the clock starts from the denial date.",
+        text: "Yes, if you filed a timely, non-frivolous extension request before your I-94 expired, unlawful presence does not accrue while it is pending. If it is denied, unlawful presence starts the day after the denial, not from your original I-94 date.",
       },
     },
     {
@@ -76,7 +87,7 @@ const faqSchema = {
       name: "Will an old overstay affect a future green card application?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "Yes. Any overstay stays on your immigration record. An overstay over 180 days can trigger inadmissibility bars that require a waiver — even if it happened years ago.",
+        text: "It can. An overstay stays on your immigration history. If you left after more than 180 days of unlawful presence, a 3-year or 10-year bar applied, and a waiver may be needed to immigrate during it. Immediate relatives of US citizens who adjust status inside the US are treated differently, which is why individual advice matters.",
       },
     },
   ],
@@ -89,8 +100,8 @@ const trust = [
 ]
 
 const thresholds = [
-  { range: 'Under 180 days', title: 'No automatic ban', text: 'Your visa is voided and future applications may be affected, but leaving now does not trigger a time bar.', bar: 'bg-safe', ink: 'text-safe-ink' },
-  { range: '180 – 364 days', title: '3-year bar', text: 'Triggered when you leave the US. The 3 years run from your departure, not from when you overstayed.', bar: 'bg-warn', ink: 'text-warn-ink' },
+  { range: '180 days or fewer', title: 'No automatic ban', text: 'Your visa is voided and future applications may be affected, but leaving now does not trigger a time bar.', bar: 'bg-safe', ink: 'text-safe-ink' },
+  { range: '181 – 364 days', title: '3-year bar', text: 'Triggered when you leave the US. The 3 years run from your departure, not from when you overstayed.', bar: 'bg-warn', ink: 'text-warn-ink' },
   { range: '365 days or more', title: '10-year bar', text: 'Triggered when you leave. This is the longest automatic bar under US immigration law.', bar: 'bg-danger', ink: 'text-danger-ink' },
 ]
 
@@ -176,6 +187,8 @@ export default function Home() {
           </div>
         </section>
 
+        <AdUnit slot="2572172105" />
+
         <section id="guides" className="mx-auto max-w-6xl scroll-mt-20 px-4 py-16 md:py-20" aria-labelledby="guides-h">
           <div className="mx-auto max-w-2xl text-center">
             <h2 id="guides-h" className="flex items-center justify-center gap-3 text-3xl font-semibold text-foreground md:text-4xl">
@@ -236,10 +249,10 @@ export default function Home() {
             the consequences of an extended overstay compound over time.
             </p>
             <p>
-            Under 180 days of unlawful presence, no automatic re-entry ban triggers when you depart.
+            With 180 days or fewer of unlawful presence, no automatic re-entry bar triggers when you depart.
             Your visa is voided and future visa applications will be affected, but you are not
-            automatically barred from returning. Between 180 and 364 days, a 3-year bar triggers the
-            moment you leave US soil. At 365 days or more, a 10-year bar applies. These are hard
+            automatically barred from returning. With more than 180 days and less than a year, a 3-year bar triggers the
+            moment you leave US soil. At one year or more, a 10-year bar applies. These are hard
             thresholds — one day over each line moves you into the next category.
             </p>
 
@@ -279,10 +292,7 @@ export default function Home() {
           </div>
         </section>
 
-        <div className="mx-auto max-w-4xl px-4">
-          <p className="mb-1 text-center text-[11px] uppercase tracking-widest text-muted-foreground">Advertisement</p>
-          <AdUnit slot="2572172105" format="horizontal" />
-        </div>
+        <AdUnit slot="2572172105" />
 
         <section className="mx-auto mt-16 max-w-3xl px-4" aria-label="Disclaimer">
           <Callout tone="warning" title="This is not legal advice">

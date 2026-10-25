@@ -3,8 +3,8 @@ export const site = {
   region: "US",
   regionLabel: "United States",
   domain: "https://overstaycheck.com",
-  // Month the guide content was last revised (matches sitemap lastmod).
-  updated: "May 2026",
+  // Month the guide content was last revised.
+  updated: "October 2026",
   // Set this to a monitored inbox. The contact page and footer show it only when set.
   contactEmail: "",
   otherSite: {

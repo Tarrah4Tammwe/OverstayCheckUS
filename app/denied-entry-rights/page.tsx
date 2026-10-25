@@ -1,176 +1,110 @@
 import type { Metadata } from 'next'
+import Link from 'next/link'
 import { Callout } from '@/components/callout'
 import { GuideLayout } from '@/components/guide-layout'
 import { site } from '@/lib/site'
 
 export const metadata: Metadata = {
-  title: 'Denied Entry Rights',
-  description: 'Your rights when denied entry to the US at the airport. What to do if CBP denies you entry.',
-  alternates: {
-    canonical: `${site.domain}/denied-entry-rights`,
-  },
+  title: 'Denied Entry at a US Airport or Border',
+  description:
+    'CBP can offer withdrawal or issue expedited removal. Learn the difference, your rights at inspection, and what to do next.',
+  alternates: { canonical: `${site.domain}/denied-entry-rights` },
 }
 
 export default function Page() {
   return (
-    <GuideLayout slug="denied-entry-rights" title="Denied Entry at the Border" description="Your rights when denied entry to the US at the airport. What to do if CBP denies you entry.">
-  <p className="lede">
-    If CBP denies you entry to the US, you have limited rights — but there are steps you can take. Here's what to do.
-  </p>
+    <GuideLayout
+      slug="denied-entry-rights"
+      title="Denied Entry at a US Airport or Border"
+      description="What happens when CBP refuses admission, and the important difference between withdrawal and expedited removal."
+      sources={[
+        { label: '8 U.S.C. §1225: inspection, expedited removal and credible fear', href: 'https://www.law.cornell.edu/uscode/text/8/1225' },
+        { label: '8 U.S.C. §1182(a)(9)(A): bars after removal', href: 'https://www.law.cornell.edu/uscode/text/8/1182' },
+        { label: 'CBP: Freedom of Information Act (request your records)', href: 'https://www.cbp.gov/site-policy-notices/foia' },
+      ]}
+    >
+      <p className="lede">
+        If a CBP officer decides you are inadmissible, what happens next depends on the type of refusal. The
+        difference between two outcomes can affect your ability to return for years.
+      </p>
 
-  <h2>Why might you be denied?</h2>
-  <p>
-    CBP can deny entry for:
-  </p>
+      <Callout tone="info" title="In short">
+        You may be allowed to <strong>withdraw your application for admission</strong> and fly home, which has no
+        formal removal order. Or you may be ordered removed under <strong>expedited removal</strong>, which normally
+        carries a 5-year bar. Read anything you are asked to sign, and ask which one it is.
+      </Callout>
 
-  <ul>
-    <li>Re-entry ban (3-year or 10-year overstay penalty)</li>
-    <li>Criminal conviction</li>
-    <li>Fraudulent documents or lying to CBP</li>
-    <li>Gang affiliation or terrorism concerns</li>
-    <li>Medical grounds (communicable disease)</li>
-    <li>Lack of proof of funds or return ticket</li>
-    <li>Prior visa violations</li>
-  </ul>
+      <h2>Why people are refused</h2>
+      <ul>
+        <li>A running bar from a past overstay, or a visa that was voided or cancelled.</li>
+        <li>No valid visa or entry document, or one that does not match the purpose of the trip.</li>
+        <li>Officer doubts that the trip is genuinely temporary, or that you can support yourself.</li>
+        <li>Criminal history, health-related or security grounds, or past immigration fraud.</li>
+        <li>Misstatements during the inspection.</li>
+      </ul>
 
-  <h2>What happens when you're denied?</h2>
-  <p>
-    CBP will:
-  </p>
+      <h2>What usually happens</h2>
+      <ol>
+        <li>You are sent to secondary inspection for further questions and checks.</li>
+        <li>The officer decides whether to admit you, refer you for more review, or treat you as inadmissible.</li>
+        <li>If inadmissible, you may be offered withdrawal, or you may be placed in expedited removal.</li>
+        <li>You are usually returned on a flight to where you came from, at the airline’s or your expense.</li>
+      </ol>
 
-  <ol>
-    <li>Take you to a secondary inspection room</li>
-    <li>Tell you the reason for denial</li>
-    <li>Give you a Notice of Ineligibility or similar form</li>
-    <li>Allow you to call a lawyer or family member</li>
-    <li>Send you back on the next flight to your point of departure (at your cost)</li>
-  </ol>
+      <h2>Withdrawal vs. expedited removal</h2>
+      <p>
+        <strong>Withdrawal of application for admission</strong> is discretionary. If the officer allows it, you
+        withdraw and depart without a formal order of removal. It is not a legal right and an officer is not required to
+        offer it. People often have a strong interest in asking for it where it makes sense.
+      </p>
+      <p>
+        <strong>Expedited removal</strong> is a removal order issued at the port of entry without a hearing before a
+        judge. It generally makes you inadmissible for <strong>5 years</strong>, and more serious findings, such as
+        fraud, can bring longer or permanent bars.
+      </p>
+      <p>
+        If you fear persecution or torture if returned, tell the officer. You are entitled to a screening interview to
+        assess your fear before being removed.
+      </p>
 
-  <Callout tone="warning" title="Your rights at the border">You have the right to remain silent. You can ask for a lawyer. Don't lie to CBP — lying is a separate crime. Be honest and clear.</Callout>
+      <h2>Your rights at inspection</h2>
+      <p>
+        At the border, noncitizens have fewer rights than people already inside the US. In practice:
+      </p>
+      <ul>
+        <li>You can ask to speak to a lawyer or contact your consulate. CBP is not required to delay the inspection to let you, but asking is reasonable and often noted.</li>
+        <li>You may decline to answer questions, but because you are the one asking to be admitted, refusing can lead to being refused entry.</li>
+        <li>
+          <strong>Do not lie or give false documents.</strong> Misrepresentation can create a permanent inadmissibility
+          ground.
+        </li>
+        <li>Do not sign forms you do not understand. Ask what each form is and whether it is a removal order.</li>
+      </ul>
 
-  <h2>What are your options?</h2>
+      <h2>After you are back abroad</h2>
+      <ol>
+        <li>Keep every document: any notice, the refusal reason, boarding passes and your passport stamps.</li>
+        <li>Write down what you were asked and what you answered while it is fresh.</li>
+        <li>Speak to an immigration attorney before applying for another visa or trying to travel again.</li>
+        <li>Consider requesting your CBP record under FOIA to see what was recorded.</li>
+        <li>Answer future visa forms accurately. They usually ask whether you have been refused admission or removed.</li>
+      </ol>
+      <p>
+        If you were refused because a bar applies, see <Link href="/appeal-reentry-ban">waivers</Link> and{' '}
+        <Link href="/travel-with-reentry-ban">life outside the US during a bar</Link>.
+      </p>
 
-  <h3 className="text-xl font-bold text-secondary mt-8 mb-3">If the denial is based on a re-entry ban</h3>
-  <p>
-    A re-entry ban is fixed. You cannot appeal it at the border. Your only options are:
-  </p>
+      <h2>Can you challenge a refusal?</h2>
+      <p>
+        There is generally no appeal from a refusal of admission at the port of entry, and courts have limited power to
+        review expedited removal. Practical routes are to correct any factual error with evidence through an attorney,
+        apply later for a visa with a stronger case, or seek a waiver if one is available. These are all case-specific.
+      </p>
 
-  <ul>
-    <li>File an I-601 waiver (if you have family sponsorship) once abroad</li>
-    <li>Wait until the ban expires (3 or 10 years)</li>
-    <li>Don't try to enter again</li>
-  </ul>
-
-  <h3 className="text-xl font-bold text-secondary mt-8 mb-3">If the denial is based on insufficient documents</h3>
-  <p>
-    If CBP says you don't have enough proof of funds or a return ticket, you could theoretically:
-  </p>
-
-  <ul>
-    <li>Call someone in the US to wire you money or buy you a return ticket</li>
-    <li>Ask CBP for a second chance</li>
-    <li>Have a friend/family member at the airport come to vouch for you</li>
-  </ul>
-
-  <p>
-    This rarely works. Once CBP denies you, they're usually firm.
-  </p>
-
-  <h3 className="text-xl font-bold text-secondary mt-8 mb-3">If the denial is based on fraud or lies</h3>
-  <p>
-    If you lied on your visa application or to CBP, the denial is likely permanent. You would need:
-  </p>
-
-  <ul>
-    <li>Clear evidence the fraud allegation is false</li>
-    <li>A lawyer to file for expedited review</li>
-    <li>Very strong mitigating circumstances</li>
-  </ul>
-
-  <p>
-    This is difficult and requires legal representation.
-  </p>
-
-  <h2>Can you appeal a denial?</h2>
-  <p>
-    No formal appeal process exists for border denials. Once CBP says no, you're sent back.
-  </p>
-
-  <p>
-    However, you can:
-  </p>
-
-  <ul>
-    <li>Request a supervisor review (rare and usually unsuccessful)</li>
-    <li>Consult an immigration attorney about filing an I-601 waiver if you have family sponsorship</li>
-    <li>File a FOIA request to see what CBP recorded about your case</li>
-    <li>Try again with a different visa application months or years later (if your circumstances change)</li>
-  </ul>
-
-  <h2>What do you do after you're deported?</h2>
-  <p>
-    CBP will:
-  </p>
-
-  <ul>
-    <li>Put you on a plane back to your home country or last departure point</li>
-    <li>Give you a deportation/removal notice</li>
-    <li>Possibly ban you from future entry</li>
-  </ul>
-
-  <p>
-    Once you're back in your home country or abroad:
-  </p>
-
-  <ul>
-    <li>Consult an immigration attorney immediately</li>
-    <li>Gather documents supporting your case (if applicable)</li>
-    <li>File an I-601 waiver if you have family sponsorship</li>
-    <li>Explore other visa options (work visa, student visa, etc.)</li>
-  </ul>
-
-  <h2>Will this affect future travel?</h2>
-  <p>
-    It depends on the reason for denial.
-  </p>
-
-  <p>
-    <strong>Re-entry ban:</strong> You cannot return until the ban expires or is waived. Every attempt to enter will be denied.
-  </p>
-
-  <p>
-    <strong>Fraud or criminal conviction:</strong> You may be permanently barred. Even after time, a second attempt will likely be denied.
-  </p>
-
-  <p>
-    <strong>Insufficient documents:</strong> You can try again later with better proof (more money, a return ticket, a job offer).
-  </p>
-
-  <h2>Can you sue CBP for wrongful denial?</h2>
-  <p>
-    Extremely unlikely. CBP has broad discretion at the border. US citizens can challenge border decisions in court, but non-citizens have very limited recourse.
-  </p>
-
-  <p>
-    You would need:
-  </p>
-
-  <ul>
-    <li>Clear proof of discrimination (racial, religious, political)</li>
-    <li>Solid evidence CBP violated federal law</li>
-    <li>An experienced immigration attorney</li>
-  </ul>
-
-  <p>
-    Most lawsuits fail.
-  </p>
-
-  <h2>Bottom line</h2>
-  <p>
-    If denied at the border, your immediate options are limited. Accept the denial, get on the plane, and then consult a lawyer. From abroad, you can pursue a waiver, apply for a different visa, or prepare for a future attempt. But at the moment of denial, CBP's decision is final.
-  </p>
-
-  <Callout tone="info" title="Before traveling to the US">Check your status. If you think you might be denied, consult an immigration attorney BEFORE boarding your flight. Don't take the risk.</Callout>
+      <Callout tone="warning" title="Not legal advice">
+        Border decisions turn on facts and officer discretion. This is general information only. If you are refused
+        entry or expect to be, speak to a qualified immigration attorney.
+      </Callout>
     </GuideLayout>
   )
 }

@@ -30,8 +30,8 @@ export default function AboutPage() {
         <li>You enter the &ldquo;Admit Until Date&rdquo; from your I-94 record.</li>
         <li>The calculator counts the whole days between that date and today, in your local time zone.</li>
         <li>
-          It compares the result with the statutory thresholds: fewer than 180 days, 180 to 364 days, and 365 days or
-          more of unlawful presence.
+          It compares the result with the statutory thresholds: 180 days or fewer, 181 to 364 days (more than 180 days,
+          less than a year), and 365 days or more of unlawful presence.
         </li>
         <li>It shows which range applies, how far you are from the next one, and which guides are relevant.</li>
       </ol>
@@ -60,7 +60,7 @@ export default function AboutPage() {
 
       <h2>What it cannot tell you</h2>
       <p>
-        The calculator applies the standard thresholds. Real cases often involve exceptions it cannot see: a timely
+        The calculator applies the standard thresholds, and it is not designed for people whose I-94 says “D/S”, such as many F-1 and J-1 holders. Real cases often involve exceptions it cannot see: a timely
         pending extension or change of status, TPS, asylum applications, age under 18, certain waivers, and more. Rules
         and USCIS policy also change over time.
       </p>

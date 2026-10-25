@@ -1,16 +1,32 @@
+import { Children, isValidElement } from "react"
 import Link from "next/link"
+import AdUnit from "@/components/AdUnit"
 import { ArrowRight, ChevronRight } from "lucide-react"
 import { guides, site } from "@/lib/site"
+
+// Insert an ad before the third section heading so it sits between paragraphs, never inside a list or callout.
+function withMidArticleAd(children: React.ReactNode) {
+  const nodes = Children.toArray(children)
+  let h2Count = 0
+  const at = nodes.findIndex((n) => {
+    if (isValidElement(n) && n.type === "h2") h2Count += 1
+    return h2Count === 3
+  })
+  if (at === -1) return nodes
+  return [...nodes.slice(0, at), <AdUnit key="mid-ad" slot="2572172105" className="not-prose" />, ...nodes.slice(at)]
+}
 
 export function GuideLayout({
   slug,
   title,
   description,
+  sources,
   children,
 }: {
   slug?: string
   title: string
   description?: string
+  sources?: { label: string; href: string }[]
   children: React.ReactNode
 }) {
   const idx = guides.findIndex((g) => g.slug === slug)
@@ -32,7 +48,7 @@ export function GuideLayout({
         "@type": "Article",
         headline: title,
         description,
-        dateModified: "2026-05-16",
+        dateModified: "2026-10-25",
         publisher: { "@type": "Organization", name: site.name, url: site.domain },
       },
     ],
@@ -57,7 +73,27 @@ export function GuideLayout({
       </div>
 
       <div className="mx-auto max-w-3xl px-4 py-10">
-        <article className="article">{children}</article>
+        <article className="article">{withMidArticleAd(children)}</article>
+
+        <AdUnit slot="2572172105" />
+
+        {sources && sources.length > 0 && (
+          <section className="mt-12 border-t border-border pt-8" aria-labelledby="sources">
+            <h2 id="sources" className="font-sans text-lg font-semibold text-foreground">Sources and official information</h2>
+            <p className="mt-1 text-sm text-muted-foreground">
+              Rules change. Check the current official text before relying on any guide, including this one.
+            </p>
+            <ul className="mt-3 list-disc space-y-1.5 pl-5 text-sm marker:text-primary">
+              {sources.map((src) => (
+                <li key={src.href}>
+                  <a href={src.href} target="_blank" rel="noopener noreferrer" className="text-primary underline underline-offset-2">
+                    {src.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
 
         <section className="mt-14 rounded-2xl border border-border bg-card p-6 shadow-sm md:p-8">
           <h2 className="text-2xl font-semibold text-foreground">Check your own dates</h2>

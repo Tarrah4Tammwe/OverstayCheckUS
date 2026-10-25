@@ -4,12 +4,13 @@ import Script from 'next/script'
 import './globals.css'
 import { SiteHeader } from '@/components/site-header'
 import { SiteFooter } from '@/components/site-footer'
+import { ConsentScripts } from '@/components/consent-scripts'
 import { site } from '@/lib/site'
 
 const dmSans = DM_Sans({ subsets: ['latin'], variable: '--font-dm-sans', display: 'swap' })
 const fraunces = Fraunces({ subsets: ['latin'], variable: '--font-fraunces', display: 'swap' })
 
-const title = 'US Visa Overstay Calculator: Check Your 3-Year and 10-Year Ban Risk | OverstayCheck'
+const title = 'US Visa Overstay Calculator: 3-Year and 10-Year Bar Check'
 const description =
   "Enter your I-94 expiry date and see how many days of unlawful presence you have, which re-entry ban applies, and what to do next. Free, private, plain English."
 
@@ -30,6 +31,7 @@ export const metadata: Metadata = {
   twitter: { card: 'summary', title, description },
   icons: { icon: '/icon.svg', apple: '/apple-icon.png' },
   manifest: '/manifest.json',
+  other: { 'google-adsense-account': 'ca-pub-8935274984783226' },
 }
 
 export const viewport: Viewport = {
@@ -62,6 +64,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <SiteHeader />
         {children}
         <SiteFooter />
+        <ConsentScripts />
         <Script
           async
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8935274984783226"
