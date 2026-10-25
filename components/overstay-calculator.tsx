@@ -1,303 +1,265 @@
 "use client"
 
-import { useState, useMemo } from "react"
-import { Calendar, AlertTriangle, CheckCircle, XCircle, Clock, ArrowRight } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent } from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
+import { useState } from "react"
+import Link from "next/link"
+import { AlertTriangle, ArrowRight, CalendarDays, CheckCircle2, ShieldAlert, XCircle } from "lucide-react"
 
-type Tier = "safe" | "warning" | "danger"
+type Tier = "valid" | "safe" | "warning" | "danger"
 
-interface CalculationResult {
+interface Result {
   daysOverstayed: number
+  daysRemaining: number
   tier: Tier
-  tierLabel: string
-  verdict: string
-  daysUntilNextTier: number | null
-  nextTierLabel: string | null
-  percentToNextTier: number
+  label: string
+  headline: string
+  detail: string
+  next: { days: number; label: string } | null
+  progress: number
+  steps: { href: string; label: string }[]
 }
 
-function calculateOverstay(expiryDate: Date): CalculationResult {
-  const today = new Date()
-  today.setHours(0, 0, 0, 0)
-  
-  const expiry = new Date(expiryDate)
-  expiry.setHours(0, 0, 0, 0)
-  
-  const diffTime = today.getTime() - expiry.getTime()
-  const daysOverstayed = Math.floor(diffTime / (1000 * 60 * 60 * 24))
-  
-  // If not overstayed yet
-  if (daysOverstayed <= 0) {
-    const daysRemaining = Math.abs(daysOverstayed)
+// "YYYY-MM-DD" from <input type="date"> must be read as a local date. new Date("2026-01-01")
+// parses as UTC midnight, which is the previous evening in the US and shifts every result by a day.
+function parseLocalDate(value: string): Date | null {
+  const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(value)
+  if (!m) return null
+  const d = new Date(Number(m[1]), Number(m[2]) - 1, Number(m[3]))
+  return isNaN(d.getTime()) ? null : d
+}
+
+function daysBetween(from: Date, to: Date) {
+  const a = Date.UTC(from.getFullYear(), from.getMonth(), from.getDate())
+  const b = Date.UTC(to.getFullYear(), to.getMonth(), to.getDate())
+  return Math.round((b - a) / 86_400_000)
+}
+
+function calculate(expiry: Date): Result {
+  const diff = daysBetween(expiry, new Date())
+
+  if (diff <= 0) {
+    const remaining = -diff
     return {
       daysOverstayed: 0,
-      tier: "safe",
-      tierLabel: "No Overstay",
-      verdict: daysRemaining === 0 
-        ? "Your authorized stay expires today. Make sure to depart before midnight."
-        : `You have ${daysRemaining} day${daysRemaining === 1 ? '' : 's'} remaining on your authorized stay. You're in good standing.`,
-      daysUntilNextTier: 180,
-      nextTierLabel: "3-Year Ban Zone",
-      percentToNextTier: 0
+      daysRemaining: remaining,
+      tier: "valid",
+      label: remaining === 0 ? "Expires today" : "Within authorized stay",
+      headline:
+        remaining === 0
+          ? "Your authorized stay ends today."
+          : `You have ${remaining} day${remaining === 1 ? "" : "s"} left on your I-94.`,
+      detail:
+        remaining === 0
+          ? "Unlawful presence starts accruing tomorrow unless you leave or have a timely extension pending."
+          : "You are not accruing unlawful presence. If you need more time, a timely Form I-539 extension filed before this date protects you while it is pending.",
+      next: null,
+      progress: 0,
+      steps: [
+        { href: "/i539-extension", label: "How to file an I-539 extension" },
+        { href: "/what-is-i94", label: "Where to find your I-94 date" },
+      ],
     }
   }
-  
-  // Under 180 days - no automatic ban yet
-  if (daysOverstayed < 180) {
+
+  if (diff < 180) {
     return {
-      daysOverstayed,
+      daysOverstayed: diff,
+      daysRemaining: 0,
       tier: "safe",
-      tierLabel: "No Entry Ban (Yet)",
-      verdict: `You've overstayed by ${daysOverstayed} day${daysOverstayed === 1 ? '' : 's'}. You can still leave without triggering an automatic entry ban, but you may face other consequences like visa cancellation or denial of future applications.`,
-      daysUntilNextTier: 180 - daysOverstayed,
-      nextTierLabel: "3-Year Ban",
-      percentToNextTier: (daysOverstayed / 180) * 100
+      label: "No re-entry ban yet",
+      headline: `${diff} day${diff === 1 ? "" : "s"} of unlawful presence.`,
+      detail:
+        "No automatic re-entry ban applies if you leave now. Your visa is voided and future applications can still be affected. The 3-year threshold is the line to watch.",
+      next: { days: 180 - diff, label: "the 3-year ban threshold" },
+      progress: (diff / 180) * 100,
+      steps: [
+        { href: "/unlawful-presence", label: "Unlawful presence vs. overstay" },
+        { href: "/i539-extension", label: "Late extensions and exceptions" },
+        { href: "/tps-status-overstay", label: "Check whether TPS or another status applies" },
+      ],
     }
   }
-  
-  // 180-365 days - 3-year ban territory
-  if (daysOverstayed < 365) {
+
+  if (diff < 365) {
     return {
-      daysOverstayed,
+      daysOverstayed: diff,
+      daysRemaining: 0,
       tier: "warning",
-      tierLabel: "3-Year Ban Zone",
-      verdict: `You've been unlawfully present for ${daysOverstayed} days. If you leave now and try to return, you'll face a 3-year entry ban. This ban starts when you depart the US.`,
-      daysUntilNextTier: 365 - daysOverstayed,
-      nextTierLabel: "10-Year Ban",
-      percentToNextTier: ((daysOverstayed - 180) / 185) * 100
+      label: "3-year ban range",
+      headline: `${diff} days of unlawful presence.`,
+      detail:
+        "If you leave the US now, a 3-year bar on re-entry is triggered when you depart. The bar starts on departure, not when the overstay began. At 365 days it becomes a 10-year bar.",
+      next: { days: 365 - diff, label: "the 10-year ban threshold" },
+      progress: ((diff - 180) / 185) * 100,
+      steps: [
+        { href: "/appeal-reentry-ban", label: "Waivers and ways to appeal a ban" },
+        { href: "/travel-with-reentry-ban", label: "Life and travel under a ban" },
+        { href: "/unlawful-presence", label: "How unlawful presence is counted" },
+      ],
     }
   }
-  
-  // 365+ days - 10-year ban territory
+
   return {
-    daysOverstayed,
+    daysOverstayed: diff,
+    daysRemaining: 0,
     tier: "danger",
-    tierLabel: "10-Year Ban Zone",
-    verdict: `You've been unlawfully present for ${daysOverstayed} days (over 1 year). If you leave now and try to return, you'll face a 10-year entry ban. This is the maximum automatic ban under US immigration law.`,
-    daysUntilNextTier: null,
-    nextTierLabel: null,
-    percentToNextTier: 100
+    label: "10-year ban range",
+    headline: `${diff} days of unlawful presence, over a year.`,
+    detail:
+      "If you leave the US now, a 10-year bar on re-entry is triggered when you depart. This is the longest automatic bar. Waivers exist for some people with qualifying family, so speak to an immigration attorney before making travel decisions.",
+    next: null,
+    progress: 100,
+    steps: [
+      { href: "/appeal-reentry-ban", label: "Waivers and ways to appeal a ban" },
+      { href: "/travel-with-reentry-ban", label: "Life and travel under a ban" },
+      { href: "/denied-entry-rights", label: "Your rights if you are denied entry" },
+    ],
   }
+}
+
+const styles: Record<
+  Tier,
+  { card: string; badge: string; bar: string; Icon: typeof CheckCircle2; iconColor: string }
+> = {
+  valid: { card: "border-safe/40 bg-safe-soft", badge: "bg-safe text-white", bar: "bg-safe", Icon: CheckCircle2, iconColor: "text-safe" },
+  safe: { card: "border-warn/50 bg-warn-soft", badge: "bg-warn-ink text-white", bar: "bg-warn", Icon: AlertTriangle, iconColor: "text-warn-ink" },
+  warning: { card: "border-warn/60 bg-warn-soft", badge: "bg-warn-ink text-white", bar: "bg-warn", Icon: ShieldAlert, iconColor: "text-warn-ink" },
+  danger: { card: "border-danger/40 bg-danger-soft", badge: "bg-danger text-white", bar: "bg-danger", Icon: XCircle, iconColor: "text-danger" },
 }
 
 export function OverstayCalculator() {
-  const [dateInput, setDateInput] = useState("")
-  const [result, setResult] = useState<CalculationResult | null>(null)
-  const [hasCalculated, setHasCalculated] = useState(false)
-  const [isCalculating, setIsCalculating] = useState(false)
+  const [value, setValue] = useState("")
+  const [result, setResult] = useState<Result | null>(null)
 
-  const handleCalculate = () => {
-    if (!dateInput) return
-    
-    setIsCalculating(true)
-    
-    setTimeout(() => {
-      const date = new Date(dateInput)
-      if (isNaN(date.getTime())) {
-        setIsCalculating(false)
-        return
-      }
-      
-      const calculation = calculateOverstay(date)
-      setResult(calculation)
-      setHasCalculated(true)
-      setIsCalculating(false)
-    }, 300)
+  const submit = (e: React.FormEvent) => {
+    e.preventDefault()
+    const date = parseLocalDate(value)
+    if (date) setResult(calculate(date))
   }
 
-  const handleReset = () => {
-    setDateInput("")
+  const reset = () => {
+    setValue("")
     setResult(null)
-    setHasCalculated(false)
   }
 
-  const isButtonDisabled = !dateInput || isCalculating
-
-  const tierColors = {
-    safe: "bg-[var(--tier-safe)]",
-    warning: "bg-[var(--tier-warning)]",
-    danger: "bg-[var(--tier-danger)]"
-  }
-
-  const tierBorders = {
-    safe: "border-[var(--tier-safe)]",
-    warning: "border-[var(--tier-warning)]",
-    danger: "border-[var(--tier-danger)]"
-  }
-
-  const tierIcons = {
-    safe: CheckCircle,
-    warning: AlertTriangle,
-    danger: XCircle
-  }
+  const s = result ? styles[result.tier] : null
 
   return (
-    <div className="w-full max-w-2xl mx-auto">
-      {/* Input Section */}
-      <Card className="border-2 border-secondary mb-6">
-        <CardContent className="p-6">
-          <h2 className="font-bold text-secondary uppercase tracking-wide mb-2">
-            Step 1: Enter Your I-94 Expiry Date
-          </h2>
-          <p className="text-muted-foreground text-sm mb-4">
-            This is the &quot;Admit Until Date&quot; on your I-94 record or entry stamp.
-          </p>
-          
-          <div className="flex flex-col sm:flex-row gap-3">
-            <div className="relative flex-1">
-              <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground pointer-events-none" />
-              <Input
-                type="date"
-                value={dateInput}
-                onChange={(e) => setDateInput(e.target.value)}
-                className="pl-10 h-12 border-2 border-secondary text-foreground bg-card"
-                aria-label="I-94 Expiry Date"
-              />
-            </div>
-            <Button 
-              onClick={handleCalculate}
-              disabled={isButtonDisabled}
-              className={`h-12 px-8 font-semibold transition-all ${
-                isButtonDisabled 
-                  ? 'bg-muted text-muted-foreground cursor-not-allowed opacity-60' 
-                  : 'bg-primary hover:bg-primary/90 text-primary-foreground cursor-pointer'
-              }`}
-            >
-              {isCalculating ? 'Calculating...' : 'Calculate'}
-            </Button>
-          </div>
-        </CardContent>
-      </Card>
+    <div className="mx-auto w-full max-w-2xl">
+      <form
+        onSubmit={submit}
+        className="rounded-2xl border border-border bg-card p-6 shadow-[0_8px_30px_-12px_rgb(30_40_90/0.25)] md:p-8"
+      >
+        <label htmlFor="i94-date" className="block text-base font-semibold text-foreground">
+          What is your I-94 &ldquo;Admit Until&rdquo; date?
+        </label>
+        <p className="mt-1 text-sm text-muted-foreground">
+          Find it at{" "}
+          <a
+            href="https://i94.cbp.dhs.gov"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="font-medium text-primary underline underline-offset-2"
+          >
+            i94.cbp.dhs.gov
+          </a>
+          . Use this date, not the expiry on your visa stamp.
+        </p>
 
-      {/* Results Section */}
-      {hasCalculated && result && (
-        <div className="space-y-4 animate-in fade-in slide-in-from-bottom-4 duration-500">
-          {/* Main Result Card */}
-          <Card className={`border-2 ${tierBorders[result.tier]}`}>
-            <CardContent className="p-6">
-              <div className="flex items-start gap-4">
-                <div className={`p-3 rounded-lg ${tierColors[result.tier]}`}>
-                  {(() => {
-                    const Icon = tierIcons[result.tier]
-                    return <Icon className="h-8 w-8 text-card" />
-                  })()}
-                </div>
-                <div className="flex-1">
-                  <p className="text-sm font-medium text-muted-foreground uppercase tracking-wide">
-                    Your Current Status
-                  </p>
-                  <h3 className="text-2xl font-bold text-secondary mt-1">
-                    {result.tierLabel}
-                  </h3>
-                </div>
+        <div className="mt-4 flex flex-col gap-3 sm:flex-row">
+          <div className="relative flex-1">
+            <CalendarDays
+              className="pointer-events-none absolute left-3.5 top-1/2 h-5 w-5 -translate-y-1/2 text-muted-foreground"
+              aria-hidden
+            />
+            <input
+              id="i94-date"
+              type="date"
+              required
+              value={value}
+              onChange={(e) => {
+                setValue(e.target.value)
+                setResult(null)
+              }}
+              className="h-12 w-full rounded-lg border border-input bg-background pl-11 pr-3 text-base text-foreground shadow-sm focus:border-primary focus:outline-none focus:ring-2 focus:ring-ring/40"
+            />
+          </div>
+          <button
+            type="submit"
+            disabled={!value}
+            className="h-12 rounded-lg bg-primary px-7 text-base font-semibold text-primary-foreground transition-opacity hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-40"
+          >
+            Check my status
+          </button>
+        </div>
+        <p className="mt-3 text-xs text-muted-foreground">
+          Calculated in your browser. Your date is never sent anywhere or stored.
+        </p>
+      </form>
+
+      {result && s && (
+        <div className="mt-6 space-y-4 animate-in fade-in slide-in-from-bottom-2 duration-500" role="status" aria-live="polite">
+          <section className={`rounded-2xl border p-6 md:p-8 ${s.card}`}>
+            <div className="flex items-start gap-4">
+              <s.Icon className={`mt-1 h-8 w-8 shrink-0 ${s.iconColor}`} aria-hidden />
+              <div className="min-w-0">
+                <span className={`inline-block rounded-full px-3 py-1 text-xs font-semibold uppercase tracking-wide ${s.badge}`}>
+                  {result.label}
+                </span>
+                <h3 className="mt-3 font-serif text-2xl font-semibold leading-snug text-foreground md:text-3xl">
+                  {result.headline}
+                </h3>
+                <p className="mt-3 leading-relaxed text-foreground/80">{result.detail}</p>
               </div>
-            </CardContent>
-          </Card>
+            </div>
 
-          {/* Stats Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            {/* Days Overstayed */}
-            <Card className="border-2 border-secondary">
-              <CardContent className="p-5">
-                <p className="text-sm font-medium text-muted-foreground uppercase tracking-wide">
-                  Days Overstayed
-                </p>
-                <p className="text-4xl font-bold text-secondary mt-2">
-                  {result.daysOverstayed}
-                </p>
-                <p className="text-sm text-muted-foreground mt-1">
-                  {result.daysOverstayed === 0 ? "You're within your authorized stay" : "days of unlawful presence"}
-                </p>
-              </CardContent>
-            </Card>
-
-            {/* Countdown to Next Tier */}
-            <Card className="border-2 border-secondary">
-              <CardContent className="p-5">
-                <p className="text-sm font-medium text-muted-foreground uppercase tracking-wide">
-                  {result.daysUntilNextTier !== null ? "Days Until Next Tier" : "Maximum Tier Reached"}
-                </p>
-                {result.daysUntilNextTier !== null ? (
-                  <>
-                    <p className="text-4xl font-bold text-primary mt-2">
-                      {result.daysUntilNextTier}
-                    </p>
-                    <div className="flex items-center gap-2 mt-1">
-                      <Clock className="h-4 w-4 text-muted-foreground" />
-                      <p className="text-sm text-muted-foreground">
-                        until {result.nextTierLabel}
-                      </p>
-                    </div>
-                  </>
-                ) : (
-                  <>
-                    <p className="text-4xl font-bold text-destructive mt-2">—</p>
-                    <p className="text-sm text-muted-foreground mt-1">
-                      10-year ban already applies
-                    </p>
-                  </>
-                )}
-              </CardContent>
-            </Card>
-          </div>
-
-          {/* Progress Bar */}
-          {result.tier !== "danger" && (
-            <Card className="border-2 border-secondary">
-              <CardContent className="p-5">
-                <div className="flex justify-between text-sm mb-2">
-                  <span className="font-medium text-secondary">Consequence Timeline</span>
-                  <span className="text-muted-foreground">{Math.round(result.percentToNextTier)}% to next tier</span>
+            {result.tier !== "valid" && (
+              <div className="mt-6">
+                <div className="mb-2 flex items-baseline justify-between text-sm">
+                  <span className="font-medium text-foreground">
+                    {result.next
+                      ? `${result.next.days} day${result.next.days === 1 ? "" : "s"} until ${result.next.label}`
+                      : "Maximum automatic bar reached"}
+                  </span>
+                  <span className="tabular-nums text-muted-foreground">{result.daysOverstayed} days counted</span>
                 </div>
-                <div className="relative h-4 bg-muted rounded-full overflow-hidden">
-                  <div 
-                    className={`absolute left-0 top-0 h-full rounded-full transition-all duration-500 ${tierColors[result.tier]}`}
-                    style={{ width: `${Math.min(result.percentToNextTier, 100)}%` }}
+                <div className="h-2.5 overflow-hidden rounded-full bg-black/10">
+                  <div
+                    className={`h-full rounded-full transition-all duration-700 ${s.bar}`}
+                    style={{ width: `${Math.min(Math.max(result.progress, 3), 100)}%` }}
                   />
                 </div>
-                <div className="flex justify-between mt-3 text-xs text-muted-foreground">
-                  <div className="flex items-center gap-1">
-                    <div className="w-2 h-2 rounded-full bg-[var(--tier-safe)]" />
-                    <span>No Ban (0-179)</span>
-                  </div>
-                  <div className="flex items-center gap-1">
-                    <div className="w-2 h-2 rounded-full bg-[var(--tier-warning)]" />
-                    <span>3-Year (180-364)</span>
-                  </div>
-                  <div className="flex items-center gap-1">
-                    <div className="w-2 h-2 rounded-full bg-[var(--tier-danger)]" />
-                    <span>10-Year (365+)</span>
-                  </div>
+                <div className="mt-2 flex justify-between text-xs text-muted-foreground">
+                  <span>Day 1</span>
+                  <span>180 · 3-year</span>
+                  <span>365 · 10-year</span>
                 </div>
-              </CardContent>
-            </Card>
-          )}
+              </div>
+            )}
+          </section>
 
-          {/* Verdict */}
-          <Card className={`border-2 ${tierBorders[result.tier]} bg-card`}>
-            <CardContent className="p-6">
-              <h3 className="font-bold text-secondary uppercase tracking-wide mb-3 flex items-center gap-2">
-                <ArrowRight className="h-5 w-5 text-primary" />
-                What This Means
-              </h3>
-              <p className="text-foreground leading-relaxed">
-                {result.verdict}
-              </p>
-            </CardContent>
-          </Card>
+          <section className="rounded-2xl border border-border bg-card p-6">
+            <h3 className="font-sans text-base font-semibold text-foreground">What to read next</h3>
+            <ul className="mt-3 divide-y divide-border">
+              {result.steps.map((step) => (
+                <li key={step.href}>
+                  <Link
+                    href={step.href}
+                    className="group flex items-center justify-between gap-3 py-3 text-foreground hover:text-primary"
+                  >
+                    <span className="font-medium">{step.label}</span>
+                    <ArrowRight className="h-4 w-4 shrink-0 text-muted-foreground transition-transform group-hover:translate-x-1 group-hover:text-primary" />
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </section>
 
-          {/* Reset Button */}
-          <div className="flex justify-center pt-2">
-            <Button 
-              variant="outline" 
-              onClick={handleReset}
-              className="border-2 border-secondary text-secondary hover:bg-secondary hover:text-secondary-foreground"
-            >
-              Calculate Another Date
-            </Button>
-          </div>
+          <p className="text-center text-sm text-muted-foreground">
+            This is general information, not legal advice. Pending applications, TPS, asylum and age exceptions can change the result.{" "}
+            <button type="button" onClick={reset} className="font-medium text-primary underline underline-offset-2">
+              Check another date
+            </button>
+          </p>
         </div>
       )}
     </div>

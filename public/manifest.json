@@ -1,15 +1,20 @@
 {
-  "name": "Overstay Check",
-  "short_name": "Overstay Check",
-  "description": "Check if you're overstaying in the UK",
+  "name": "OverstayCheck US",
+  "short_name": "OverstayCheck",
+  "description": "Free US visa overstay calculator. Check unlawful presence and re-entry ban thresholds.",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#ffffff",
-  "theme_color": "#000000",
+  "background_color": "#fbfaf7",
+  "theme_color": "#2b3f86",
   "icons": [
     {
-      "src": "/icon.png",
+      "src": "/icon-192.png",
       "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
       "type": "image/png"
     }
   ]

@@ -1,53 +1,61 @@
+import type { Metadata } from 'next'
+import { PageShell } from '@/components/page-shell'
+import { site } from '@/lib/site'
+
 export const metadata: Metadata = {
-  title: 'Privacy Policy - Overstay Check',
-  description: 'Privacy policy for Overstay Check. How we handle your data.',
-  alternates: {
-    canonical: 'https://overstaycheck.com/privacy',
-  },
+  title: 'Privacy policy',
+  description: 'What OverstayCheck does and does not collect, how advertising cookies work, and your choices.',
+  alternates: { canonical: `${site.domain}/privacy` },
 }
 
-import type { Metadata } from 'next'
 export default function PrivacyPage() {
   return (
-    <div className="container mx-auto px-4 py-8 max-w-2xl">
-      <a href="/" className="text-blue-600 hover:underline mb-8 inline-block">
-        ← Back to home
-      </a>
-      
-      <h1 className="text-3xl font-bold mb-6">Privacy Policy</h1>
-      <p className="text-sm text-gray-600 mb-6"><strong>Last updated: May 2026</strong></p>
+    <PageShell title="Privacy policy" lede="Short version: the date you enter never leaves your browser.">
+      <p><strong>Last updated: October 2026</strong></p>
 
-      <h2 className="text-2xl font-bold mb-4">What Data We Collect</h2>
-      <p className="mb-4">This calculator runs in your browser. We collect:</p>
-      <ul className="list-disc list-inside mb-6">
-        <li>Google Analytics (pages visited, device type, location)</li>
-        <li>No data from your I-94 date or personal inputs (they stay on your device)</li>
-      </ul>
-      <p className="mb-4">We do <strong>not</strong> collect:</p>
-      <ul className="list-disc list-inside mb-6">
-        <li>Immigration status</li>
-        <li>Personal identification</li>
-        <li>Email addresses</li>
-        <li>Cookies for cross-site tracking</li>
+      <h2>The calculator</h2>
+      <p>
+        The calculator runs in your browser. The date you enter is not sent to our servers and is not stored, in a
+        database or in cookies.
+      </p>
+
+      <h2>What we do not collect</h2>
+      <ul>
+        <li>Your immigration status or any dates you enter</li>
+        <li>Your name, email address or other identity details</li>
+        <li>Accounts or logins. There are none.</li>
       </ul>
 
-      <h2 className="text-2xl font-bold mb-4">How We Use Analytics Data</h2>
-      <p className="mb-6">We use it to understand traffic patterns and improve the site.</p>
+      <h2>Hosting</h2>
+      <p>
+        The site is hosted on Vercel. Like any web host, it processes standard request data (such as IP address and
+        browser type) to deliver pages and protect the service.
+      </p>
 
-      <h2 className="text-2xl font-bold mb-4">Advertising</h2>
-      <p className="mb-6">This site displays Google AdSense advertisements. Google may use cookies to serve ads based on your browsing history. You can opt out at <a href="https://adssettings.google.com" className="text-blue-600 hover:underline">Google Ad Settings</a>.</p>
+      <h2>Advertising</h2>
+      <p>
+        We show ads through Google AdSense to cover running costs. Google and its partners may use cookies or similar
+        technologies to serve and measure ads, including ads based on your earlier visits. You can manage this at{' '}
+        <a href="https://adssettings.google.com" target="_blank" rel="noopener noreferrer">Google Ad Settings</a> or learn
+        more at{' '}
+        <a href="https://policies.google.com/technologies/ads" target="_blank" rel="noopener noreferrer">
+          how Google uses data from sites that use its services
+        </a>
+        .
+      </p>
 
-      <h2 className="text-2xl font-bold mb-4">Important: Not Legal Advice</h2>
-      <p className="mb-6">This tool provides general information about US immigration thresholds. It is <strong>not legal advice</strong>. Individual circumstances vary. If you're in immigration proceedings or have an overstay, consult an immigration attorney.</p>
-
-      <h2 className="text-2xl font-bold mb-4">Your Rights</h2>
-      <p className="mb-4">You can:</p>
-      <ul className="list-disc list-inside mb-6">
-        <li>Disable JavaScript to block analytics</li>
-        <li>Use browser privacy tools</li>
-        <li>Opt out of personalised Google ads</li>
+      <h2>Your choices</h2>
+      <ul>
+        <li>Opt out of personalized ads in Google Ad Settings</li>
+        <li>Block or clear cookies in your browser, or use a content blocker</li>
       </ul>
-      <p>We don't sell data or share personal information with third parties.</p>
-    </div>
+      <p>We do not sell personal information.</p>
+
+      <h2>Not legal advice</h2>
+      <p>
+        Everything on this site is general information, not legal advice. See the <a href="/about">About page</a> for
+        how the calculator works and its limits.
+      </p>
+    </PageShell>
   )
 }
