@@ -1,184 +1,127 @@
+import type { Metadata } from 'next'
+import Link from 'next/link'
+import { Callout } from '@/components/callout'
+import { GuideLayout } from '@/components/guide-layout'
+import { site } from '@/lib/site'
+
 export const metadata: Metadata = {
-  title: 'What Is I-94 - Overstay Check',
-  description: 'What is Form I-94? How to read it, find your I-94 number, and check your departure date.',
-  alternates: {
-    canonical: 'https://overstaycheck.com/what-is-i94',
-  },
+  title: 'What Is an I-94? Admit Until Date Explained',
+  description:
+    'Your I-94 record, not your visa, sets how long you may stay in the US. Where to find it, what D/S means, and how it relates to overstay.',
+  alternates: { canonical: `${site.domain}/what-is-i94` },
 }
 
-import type { Metadata } from 'next'
-
-
-import Link from 'next/link'
-import { ArrowLeft, AlertCircle } from 'lucide-react'
-
-export default function WhatIsI94Page() {
+export default function Page() {
   return (
-    <main className="min-h-screen bg-background">
-      <header className="border-b-2 border-secondary bg-card">
-        <div className="max-w-4xl mx-auto px-4 py-4">
-          <Link href="/" className="flex items-center gap-2 text-primary hover:underline mb-4">
-            <ArrowLeft className="h-4 w-4" />
-            Back to Calculator
-          </Link>
-          <h1 className="text-4xl font-bold text-secondary">What Is an I-94 Visa?</h1>
-        </div>
-      </header>
+    <GuideLayout
+      slug="what-is-i94"
+      title="What Is an I-94? Your Admit Until Date Explained"
+      description="Your I-94 record, not your visa, sets how long you may stay in the US."
+      sources={[
+        { label: 'CBP: Official I-94 website (look up your record)', href: 'https://i94.cbp.dhs.gov' },
+        { label: 'USCIS: Form I-539, Application to Extend/Change Nonimmigrant Status', href: 'https://www.uscis.gov/i-539' },
+        { label: '8 U.S.C. §1182(a)(9)(B): unlawful presence bars', href: 'https://www.law.cornell.edu/uscode/text/8/1182' },
+      ]}
+    >
+      <p className="lede">
+        The I-94 is the US government’s record of when you entered and how long you are allowed to stay. It is not
+        your visa. Most overstay questions come down to one date on this record.
+      </p>
 
-      <article className="max-w-4xl mx-auto px-4 py-12">
-        <div className="prose prose-lg max-w-none">
-          <p className="text-lg text-muted-foreground mb-8">
-            An I-94 is the single most important document for your US visa status. It's not your visa itself — it's the US government's official record of when you're allowed to stay. Getting it right is critical for avoiding overstay penalties.
-          </p>
+      <Callout tone="info" title="In short">
+        Your <strong>visa</strong> lets you travel to a US port of entry and ask to be admitted. Your{' '}
+        <strong>I-94</strong> says how long you may stay once admitted. If your visa is valid until 2030 but your I-94
+        says “Admit Until” June 30, 2026, you must leave or have a timely extension pending by that date.
+      </Callout>
 
-          <h2 className="text-2xl font-bold text-secondary mt-10 mb-4">What's the difference between a visa and an I-94?</h2>
-          <p>
-            People use the words "visa" and "I-94" as if they mean the same thing. They don't. Here's why it matters.
-          </p>
+      <h2>Visa vs. I-94: what is the difference?</h2>
+      <p>
+        A visa is a foil in your passport issued by a US consulate. It is permission to <em>apply for admission</em>.
+        The officer at the port of entry then decides whether to admit you and for how long. That decision is recorded
+        on your I-94.
+      </p>
+      <p>
+        This is why people with a long-validity tourist visa can still overstay. The visa can be good for years while
+        each individual stay is limited to the period on the I-94.
+      </p>
 
-          <p>
-            <strong>A visa</strong> is a stamp in your passport. It's your <em>permission to enter</em> the US. It says "we let this person in". But a visa doesn't tell you how long you can stay.
-          </p>
+      <h2>Where to find your I-94</h2>
+      <ol>
+        <li>
+          <strong>Online (most reliable).</strong> Go to the official CBP site at{' '}
+          <a href="https://i94.cbp.dhs.gov" target="_blank" rel="noopener noreferrer">i94.cbp.dhs.gov</a>. Choose “Get
+          Most Recent I-94” and enter your passport details. You can also view your recent travel history there.
+        </li>
+        <li>
+          <strong>Your passport stamp.</strong> The admission stamp from the officer may show the date you were admitted
+          and “until” date or “D/S”.
+        </li>
+        <li>
+          <strong>A paper I-94.</strong> If you crossed a land border in the past or were given a paper card, it will
+          show the same information.
+        </li>
+      </ol>
+      <p>
+        If the online record and your stamp disagree, the online record is what officers check. If you think the record
+        is wrong, see “What if your I-94 is wrong?” below.
+      </p>
 
-          <p>
-            <strong>An I-94</strong> is the actual record of how long you're allowed to be here. It's called your "Arrival/Departure Record". The I-94 has a specific date — the "Admit Until Date" — and that's what matters for overstay.
-          </p>
+      <h2 id="ds">What if my I-94 says “D/S”?</h2>
+      <p>
+        “D/S” means “duration of status”. It is common for students (F-1), exchange visitors (J-1) and some other
+        categories. There is no calendar date. You may stay as long as you keep your status and follow its rules, for
+        example by staying enrolled and within the program end date on your Form I-20 or DS-2019.
+      </p>
+      <p>
+        Unlawful presence works differently for D/S holders. It generally does not begin to accrue just because your
+        program ended or you violated the terms of your status. It begins when USCIS makes a formal finding of a status
+        violation while deciding a benefit request, or an immigration judge issues a decision. If your I-94 says D/S,
+        speak to an attorney or your school’s designated official before using any date-based calculator, including
+        ours.
+      </p>
 
-          <div className="bg-blue-50 border-l-4 border-blue-500 p-6 my-8">
-            <div className="flex gap-3">
-              <AlertCircle className="h-6 w-6 text-blue-600 flex-shrink-0 mt-1" />
-              <div>
-                <p className="font-bold text-blue-900 mb-2">Key point:</p>
-                <p className="text-blue-800">
-                  Your visa might say it expires in 2028. But your I-94 might say you only have permission to stay until June 2026. If you stay past June 2026, you're overstaying — even though your visa is valid.
-                </p>
-              </div>
-            </div>
-          </div>
+      <h2>Which date counts for an overstay?</h2>
+      <p>
+        For most visitors and workers, the “Admit Until Date” on the I-94 is the last day of authorized stay. If you are
+        still in the US the next day and have no extension or other protection, you are in a period of{' '}
+        <Link href="/unlawful-presence">unlawful presence</Link>.
+      </p>
+      <ul>
+        <li>Under or up to 180 days: no automatic re-entry bar when you leave, but your visa is voided and future applications are affected.</li>
+        <li>More than 180 days and less than one year: a 3-year bar can apply when you depart.</li>
+        <li>One year or more: a 10-year bar applies when you depart.</li>
+      </ul>
+      <p>
+        You can see which range applies to you with the <Link href="/">overstay calculator</Link>.
+      </p>
 
-          <h2 className="text-2xl font-bold text-secondary mt-10 mb-4">Where do you find your I-94?</h2>
-          <p>
-            Your I-94 appears in three places:
-          </p>
+      <h2>Can I extend my I-94?</h2>
+      <p>
+        Many people can, but they must ask <em>before</em> the date passes. Visitors usually file Form I-539 with USCIS.
+        Workers are usually extended through an employer petition, and students through their school. A timely filed,
+        non-frivolous request can stop unlawful presence from accruing while it is pending. Read the{' '}
+        <Link href="/i539-extension">I-539 guide</Link> for details and exceptions.
+      </p>
 
-          <ol className="list-decimal list-inside space-y-3 ml-4">
-            <li><strong>Your passport entry stamp.</strong> When you landed in the US, the border agent stamped your passport with a box showing your I-94 number and "Admit Until" date. Look in the US pages of your passport.</li>
-            <li><strong>Your I-94 online record.</strong> Visit <a href="https://i94.cbp.dhs.gov" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">i94.cbp.dhs.gov</a> and search by name and passport number. This shows your official USCIS record.</li>
-            <li><strong>Your I-94 receipt.</strong> If you filled out the form on arrival, you got a receipt with the date.</li>
-          </ol>
+      <h2>What if my I-94 is wrong?</h2>
+      <p>
+        Errors happen: a wrong name, class of admission or date. Start by checking the official online record. If it is
+        still wrong, you can ask CBP to correct it, usually through a Deferred Inspection office, and you will need
+        documents that prove what it should say. An immigration attorney can help if the error affects a pending
+        application.
+      </p>
 
-          <p className="mt-6">
-            The online record (CBP.gov) is the most reliable source. That's what immigration officers check, and that's what determines your legal status.
-          </p>
+      <h2>Special situations</h2>
+      <p>
+        Some people are not accruing unlawful presence even after their I-94 date passes: for example people with{' '}
+        <Link href="/tps-status-overstay">Temporary Protected Status</Link>, children under 18, and some applicants with
+        pending asylum, extension, or change-of-status requests. These exceptions are narrow and fact-specific.
+      </p>
 
-          <h2 className="text-2xl font-bold text-secondary mt-10 mb-4">What does the I-94 actually say?</h2>
-          <p>
-            Your I-94 record contains:
-          </p>
-
-          <ul className="space-y-2 ml-4">
-            <li>• Your name and passport number</li>
-            <li>• Your visa category (B-1/B-2 tourist, F-1 student, H-1B worker, etc.)</li>
-            <li>• Your arrival date in the US</li>
-            <li>• Your <strong>"Admit Until Date"</strong> — the deadline for staying legally</li>
-            <li>• Any conditions on your stay (like whether you can work)</li>
-          </ul>
-
-          <p className="mt-6 font-bold">
-            The "Admit Until Date" is the only number that matters for overstay.
-          </p>
-
-          <h2 className="text-2xl font-bold text-secondary mt-10 mb-4">Can your I-94 be extended?</h2>
-          <p>
-            Yes, but only if you apply <em>before</em> it expires. The form is called I-539, and it's for people who need to stay longer.
-          </p>
-
-          <p>
-            If your I-94 is set to expire on June 30, and you file an I-539 extension application <em>before</em> June 30, you're protected. Even if your application takes months to process, you're not overstaying while it's pending.
-          </p>
-
-          <p>
-            But if your I-94 expires and you haven't filed an extension, every day after that date counts as unlawful presence.
-          </p>
-
-          <p>
-            <Link href="/i539-extension" className="text-primary hover:underline font-semibold">
-              Learn more about I-539 extensions →
-            </Link>
-          </p>
-
-          <h2 className="text-2xl font-bold text-secondary mt-10 mb-4">What if your I-94 is wrong?</h2>
-          <p>
-            If your I-94 shows an incorrect "Admit Until Date" — either too early or too late — you can request a correction. But this is rare and requires documentation.
-          </p>
-
-          <p>
-            If you believe your I-94 is wrong:
-          </p>
-
-          <ol className="list-decimal list-inside space-y-3 ml-4">
-            <li>Check the CBP.gov online record first (it's the official source)</li>
-            <li>If it's still wrong, contact CBP directly or consult an immigration attorney</li>
-            <li>Don't assume it's wrong based on your passport stamp alone — the online record is what counts</li>
-          </ol>
-
-          <h2 className="text-2xl font-bold text-secondary mt-10 mb-4">What happens if you stay past your I-94 date?</h2>
-          <p>
-            If you stay in the US after your "Admit Until Date", you're in "unlawful presence". This triggers the automatic re-entry bans.
-          </p>
-
-          <ul className="space-y-3 ml-4">
-            <li><strong>Under 180 days overstay:</strong> No automatic re-entry ban, but your visa is cancelled</li>
-            <li><strong>180-364 days overstay:</strong> A 3-year re-entry ban applies when you leave</li>
-            <li><strong>365+ days overstay:</strong> A 10-year re-entry ban applies when you leave</li>
-          </ul>
-
-          <p className="mt-6">
-            <Link href="/" className="text-primary hover:underline font-semibold">
-              Use the calculator to check your specific situation →
-            </Link>
-          </p>
-
-          <h2 className="text-2xl font-bold text-secondary mt-10 mb-4">Special statuses that affect your I-94</h2>
-          <p>
-            If you're on TPS (Temporary Protected Status) or have pending asylum or VAWA claims, your I-94 rules might be different. These statuses can pause the overstay clock even if your I-94 date has passed.
-          </p>
-
-          <p>
-            <Link href="/tps-status-overstay" className="text-primary hover:underline font-semibold">
-              Learn how TPS affects overstay rules →
-            </Link>
-          </p>
-
-          <h2 className="text-2xl font-bold text-secondary mt-10 mb-4">Bottom line</h2>
-          <p>
-            Your I-94 "Admit Until Date" is the countdown clock for your legal stay. Check it on CBP.gov. If it's coming up soon, consider filing an extension or arranging your departure. And if you've already overstayed, an immigration attorney can explain your options.
-          </p>
-
-          <div className="bg-orange-50 border-l-4 border-orange-500 p-6 my-8">
-            <div className="flex gap-3">
-              <AlertCircle className="h-6 w-6 text-orange-600 flex-shrink-0 mt-1" />
-              <div>
-                <p className="font-bold text-orange-900 mb-2">Important:</p>
-                <p className="text-orange-800">
-                  This is general information, not legal advice. If you're facing overstay or immigration issues, consult a qualified immigration attorney in your state.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <nav className="border-t-2 border-secondary mt-12 pt-8">
-          <p className="text-sm text-muted-foreground mb-4">Related guides:</p>
-          <ul className="space-y-2">
-            <li><Link href="/i539-extension" className="text-primary hover:underline">→ I-539 Extension Applications</Link></li>
-            <li><Link href="/unlawful-presence" className="text-primary hover:underline">→ Unlawful Presence vs. Overstay</Link></li>
-            <li><Link href="/tps-status-overstay" className="text-primary hover:underline">→ TPS Status and Overstay</Link></li>
-            <li><Link href="/appeal-reentry-ban" className="text-primary hover:underline">→ Appealing a Re-Entry Ban</Link></li>
-            <li><Link href="/" className="text-primary hover:underline font-semibold">→ Back to Calculator</Link></li>
-          </ul>
-        </nav>
-      </article>
-    </main>
+      <Callout tone="warning" title="Not legal advice">
+        This guide is general information. If you are near a deadline or unsure what applies to you, speak to a
+        licensed US immigration attorney.
+      </Callout>
+    </GuideLayout>
   )
 }

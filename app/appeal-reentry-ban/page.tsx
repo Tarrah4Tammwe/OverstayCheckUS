@@ -1,170 +1,113 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
-import { ArrowLeft, AlertCircle } from 'lucide-react'
+import { Callout } from '@/components/callout'
+import { GuideLayout } from '@/components/guide-layout'
+import { site } from '@/lib/site'
 
 export const metadata: Metadata = {
-  title: 'Appeal a Re-Entry Ban - Overstay Check',
-  description: 'How to appeal or waive a US re-entry ban after an overstay. I-601 waivers, timelines, and eligibility explained.',
-  alternates: {
-    canonical: 'https://overstaycheck.com/appeal-reentry-ban',
-  },
+  title: 'Waiving a 3-Year or 10-Year Re-Entry Bar',
+  description:
+    'No appeal exists for an unlawful presence bar, but a waiver may. Who qualifies, the hardship standard, I-601 vs I-601A, and adjusting without leaving.',
+  alternates: { canonical: `${site.domain}/appeal-reentry-ban` },
 }
 
-export default function AppealReentryBanPage() {
+export default function Page() {
   return (
-    <main className="min-h-screen bg-background">
-      <header className="border-b-2 border-secondary bg-card">
-        <div className="max-w-4xl mx-auto px-4 py-4">
-          <Link href="/" className="flex items-center gap-2 text-primary hover:underline mb-4">
-            <ArrowLeft className="h-4 w-4" />
-            Back to Calculator
-          </Link>
-          <h1 className="text-4xl font-bold text-secondary">Can You Appeal a Re-Entry Ban?</h1>
-        </div>
-      </header>
+    <GuideLayout
+      slug="appeal-reentry-ban"
+      title="Waiving a 3-Year or 10-Year Re-Entry Ban"
+      description="You cannot appeal an unlawful presence bar, but some people can get a waiver or avoid triggering it."
+      sources={[
+        { label: '8 U.S.C. §1182(a)(9)(B)(v): waiver of the unlawful presence bars', href: 'https://www.law.cornell.edu/uscode/text/8/1182' },
+        { label: 'USCIS: Form I-601, Application for Waiver of Grounds of Inadmissibility', href: 'https://www.uscis.gov/i-601' },
+        { label: 'USCIS: Form I-601A, Provisional Unlawful Presence Waiver', href: 'https://www.uscis.gov/i-601a' },
+        { label: 'USCIS Policy Manual, Volume 9, Part B: extreme hardship', href: 'https://www.uscis.gov/policy-manual/volume-9-part-b' },
+        { label: '8 U.S.C. §1255: adjustment of status', href: 'https://www.law.cornell.edu/uscode/text/8/1255' },
+      ]}
+    >
+      <p className="lede">
+        The 3-year and 10-year bars are automatic, so there is nothing to “appeal”. But the law provides a waiver for
+        some people, and some can avoid triggering the bar altogether.
+      </p>
 
-      <article className="max-w-4xl mx-auto px-4 py-12">
-        <div className="prose prose-lg max-w-none">
-          <p className="text-lg text-muted-foreground mb-8">
-            A 3-year or 10-year re-entry ban sounds permanent. But there are ways to get it waived — usually through family sponsorship or extreme hardship. Here's how.
-          </p>
+      <Callout tone="info" title="In short">
+        A waiver requires an <strong>immigrant visa</strong> application and proof that refusing admission would cause{' '}
+        <strong>extreme hardship to a US citizen or permanent resident spouse or parent</strong>. Hardship to a child or
+        to yourself does not count for this waiver. People who qualify to adjust status inside the US may not need one.
+      </Callout>
 
-          <h2 className="text-2xl font-bold text-secondary mt-10 mb-4">The two ways to beat a re-entry ban</h2>
+      <h2>Option 1: avoid triggering the bar</h2>
+      <p>
+        The bars only apply when you <em>leave</em> and seek admission again. If you are an immediate relative of a US
+        citizen (spouse, unmarried child under 21, or parent of a citizen aged 21 or over) and you were inspected and
+        admitted or paroled, you can generally apply for a green card without leaving, even if you overstayed. Because
+        you never depart, the bar is not triggered.
+      </p>
+      <p>
+        This is the single most important option to check before anyone leaves the US. Whether it applies depends on how
+        you entered, your history and your relative’s status, so speak to an attorney first.
+      </p>
 
-          <h3 className="text-xl font-bold text-secondary mt-8 mb-3">1. I-601 Waiver (Extreme Hardship)</h3>
-          <p>
-            If you can prove that keeping you out causes "extreme hardship" to a US citizen or permanent resident family member, USCIS can waive the ban.
-          </p>
+      <h2>Option 2: the unlawful presence waiver</h2>
+      <p>
+        If you need to leave to complete an immigrant visa interview at a US consulate, the departure triggers the bar.
+        Congress allows a waiver, but with conditions:
+      </p>
+      <ul>
+        <li>You must be applying for an immigrant visa or green card (for example through a family petition).</li>
+        <li>
+          You must be the spouse, or son or daughter, of a US citizen or lawful permanent resident, <em>and</em> show
+          that refusing you would cause <strong>extreme hardship to your US citizen or permanent resident spouse or
+          parent</strong>.
+        </li>
+        <li>It is discretionary. Meeting the conditions does not guarantee approval.</li>
+      </ul>
+      <p>
+        Hardship to your child does not by itself qualify, and “the family will be separated” is not enough on its own.
+        USCIS looks at the whole picture: health, finances, family ties, country conditions and more, supported by
+        evidence.
+      </p>
 
-          <p>
-            <strong>"Extreme hardship" means more than just missing someone.</strong> It means:
-          </p>
+      <h2>I-601 and I-601A: the difference</h2>
+      <ul>
+        <li>
+          <strong>Form I-601A (provisional waiver)</strong> can be filed <em>in the US</em> before you depart for your
+          visa interview, for people who qualify. It lets you find out about the waiver before you leave. It cannot
+          cover every ground of inadmissibility.
+        </li>
+        <li>
+          <strong>Form I-601</strong> is filed after you have been found inadmissible at the consulate abroad. You wait
+          outside the US for the decision.
+        </li>
+      </ul>
+      <p>
+        Check the current forms, fees and eligibility on the USCIS pages linked below, as these are updated.
+      </p>
 
-          <ul className="space-y-2 ml-4">
-            <li>• Medical/health crisis (eg: your child needs your care and has no one else)</li>
-            <li>• Severe financial hardship (eg: your spouse loses their job without you)</li>
-            <li>• Mental health crisis directly tied to your absence</li>
-            <li>• Special educational needs the family can't meet without you</li>
-          </ul>
+      <h2>Option 3: temporary visits with a nonimmigrant waiver</h2>
+      <p>
+        If you want to visit the US temporarily while a bar applies, a consulate can recommend a “nonimmigrant waiver”
+        under section 212(d)(3). It is discretionary and not available for every situation, but it shows that a bar does
+        not always mean an absolute “no”.
+      </p>
 
-          <p className="mt-6">
-            To qualify, you need:
-          </p>
+      <h2>Common mistakes</h2>
+      <ul>
+        <li><strong>Leaving first and asking questions later.</strong> Departure triggers the bar. Get advice before you travel.</li>
+        <li><strong>Assuming a child can be the qualifying relative.</strong> For this waiver, only a spouse or parent counts.</li>
+        <li><strong>Paying a “notario”.</strong> Only licensed attorneys and accredited representatives can give immigration legal advice.</li>
+        <li><strong>Misrepresenting facts.</strong> Lying to an official can create a separate, more serious ground of inadmissibility.</li>
+      </ul>
 
-          <ul className="space-y-2 ml-4">
-            <li>• A US citizen or green card holder who is your spouse, parent, or adult child</li>
-            <li>• Documented proof of the hardship (medical records, financial documents, letters)</li>
-            <li>• A lawyer to build the case (most people succeed with attorneys, few without)</li>
-          </ul>
+      <p>
+        See also: <Link href="/travel-with-reentry-ban">living and travelling while a ban applies</Link> and the{' '}
+        <Link href="/">overstay calculator</Link>.
+      </p>
 
-          <h3 className="text-xl font-bold text-secondary mt-8 mb-3">2. Family-Based Sponsorship (Immediate Relative Visa)</h3>
-          <p>
-            If you have a US citizen spouse or parent, they can petition for you. You can be abroad and request a waiver of the re-entry ban.
-          </p>
-
-          <p>
-            This is the most common way to get around a ban. The process:
-          </p>
-
-          <ol className="list-decimal list-inside space-y-3 ml-4">
-            <li>Your US citizen relative (spouse or parent) files Form I-130 (petition)</li>
-            <li>Once approved, you're eligible for an immediate relative visa</li>
-            <li>You go to a US consulate abroad</li>
-            <li>At the consulate, you request a waiver of the re-entry ban (Form I-601)</li>
-            <li>If approved, you get your visa and can re-enter</li>
-          </ol>
-
-          <p className="mt-6">
-            The "hardship" standard for immediate relatives is lower than for non-family. Simply showing the family will be apart can be enough.
-          </p>
-
-          <h2 className="text-2xl font-bold text-secondary mt-10 mb-4">Who qualifies for a waiver?</h2>
-
-          <p>
-            <strong>Eligible immediate relatives:</strong>
-          </p>
-
-          <ul className="space-y-2 ml-4">
-            <li>• US citizen spouse</li>
-            <li>• US citizen parent (if you're age 21+)</li>
-            <li>• US citizen child (if you're age 21+)</li>
-          </ul>
-
-          <p className="mt-6">
-            <strong>NOT eligible:</strong>
-          </p>
-
-          <ul className="space-y-2 ml-4">
-            <li>• Siblings</li>
-            <li>• Cousins</li>
-            <li>• Aunts/uncles</li>
-            <li>• Grandchildren</li>
-            <li>• Fiancée (unless you marry first)</li>
-          </ul>
-
-          <h2 className="text-2xl font-bold text-secondary mt-10 mb-4">How long does a waiver take?</h2>
-          <p>
-            Waiver processing: 4–12 months (varies by consulate). It's separate from the visa petition, so budget extra time.
-          </p>
-
-          <h2 className="text-2xl font-bold text-secondary mt-10 mb-4">Can you work while you're banned?</h2>
-          <p>
-            No. A re-entry ban means you must be outside the US. You cannot get work authorisation while under a ban.
-          </p>
-
-          <p>
-            Some people stay in the US illegally after their overstay while pursuing a waiver. This is extremely risky — it adds to your unlawful presence and makes future cases harder.
-          </p>
-
-          <div className="bg-orange-50 border-l-4 border-orange-500 p-6 my-8">
-            <div className="flex gap-3">
-              <AlertCircle className="h-6 w-6 text-orange-600 flex-shrink-0 mt-1" />
-              <div>
-                <p className="font-bold text-orange-900 mb-2">Critical:</p>
-                <p className="text-orange-800">
-                  If you have a re-entry ban, you must leave the US before it's enforceable. Once CBP records it, staying illegally can make you deportable.
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <h2 className="text-2xl font-bold text-secondary mt-10 mb-4">Do you need a lawyer?</h2>
-          <p>
-            Yes. Waiver cases are almost always handled by immigration attorneys. The documentation is complex, and "extreme hardship" has to be proven carefully.
-          </p>
-
-          <p>
-            Most people who try I-601 waivers alone are denied. Attorneys increase approval odds significantly.
-          </p>
-
-          <h2 className="text-2xl font-bold text-secondary mt-10 mb-4">Bottom line</h2>
-          <p>
-            A re-entry ban isn't the end of the road if you have family in the US. An immediate relative can petition for you, or you can pursue a waiver. But it takes time, documentation, and usually a lawyer. Start the process early.
-          </p>
-
-          <div className="bg-blue-50 border-l-4 border-blue-500 p-6 my-8">
-            <div className="flex gap-3">
-              <AlertCircle className="h-6 w-6 text-blue-600 flex-shrink-0 mt-1" />
-              <div>
-                <p className="font-bold text-blue-900 mb-2">Not legal advice:</p>
-                <p className="text-blue-800">
-                  This is general information. Waiver cases are highly individual. Consult a qualified immigration attorney in your state.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <nav className="border-t-2 border-secondary mt-12 pt-8">
-          <p className="text-sm text-muted-foreground mb-4">Related guides:</p>
-          <ul className="space-y-2">
-            <li><Link href="/what-is-i94" className="text-primary hover:underline">→ What is an I-94 Visa?</Link></li>
-            <li><Link href="/unlawful-presence" className="text-primary hover:underline">→ Unlawful Presence vs. Overstay</Link></li>
-            <li><Link href="/travel-with-reentry-ban" className="text-primary hover:underline">→ Travel Options with a Re-Entry Ban</Link></li>
-            <li><Link href="/" className="text-primary hover:underline font-semibold">→ Back to Calculator</Link></li>
-          </ul>
-        </nav>
-      </article>
-    </main>
+      <Callout tone="warning" title="Get an attorney for waivers">
+        Waivers turn on evidence and legal detail. This is general information only. Speak to a qualified immigration
+        attorney in your state.
+      </Callout>
+    </GuideLayout>
   )
 }

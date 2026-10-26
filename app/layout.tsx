@@ -1,46 +1,76 @@
-import type { Metadata } from 'next'
-import './globals.css'
+import type { Metadata, Viewport } from 'next'
+import { DM_Sans, Fraunces } from 'next/font/google'
 import Script from 'next/script'
+import './globals.css'
+import { SiteHeader } from '@/components/site-header'
+import { SiteFooter } from '@/components/site-footer'
+import { ConsentScripts } from '@/components/consent-scripts'
+import { site } from '@/lib/site'
+
+const dmSans = DM_Sans({ subsets: ['latin'], variable: '--font-dm-sans', display: 'swap' })
+const fraunces = Fraunces({ subsets: ['latin'], variable: '--font-fraunces', display: 'swap' })
+
+const title = 'US Visa Overstay Calculator: 3-Year and 10-Year Bar Check'
+const description =
+  "Enter your I-94 expiry date and see how many days of unlawful presence you have, which re-entry ban applies, and what to do next. Free, private, plain English."
 
 export const metadata: Metadata = {
-  title: 'Overstay Check - US Visa Overstay Calculator',
-  description: 'Check if you\'re overstaying in the US and understand your visa status and re-entry bans',
-  alternates: {
-    canonical: 'https://overstaycheck.com',
+  metadataBase: new URL(site.domain),
+  title: { default: title, template: '%s | OverstayCheck' },
+  description,
+  alternates: { canonical: site.domain },
+  robots: 'index, follow',
+  openGraph: {
+    title,
+    description,
+    url: site.domain,
+    siteName: site.name,
+    type: 'website',
+    locale: 'en_US',
   },
+  twitter: { card: 'summary', title, description },
+  icons: { icon: '/icon.svg', apple: '/apple-icon.png' },
+  manifest: '/manifest.json',
+  other: { 'google-adsense-account': 'ca-pub-8935274984783226' },
 }
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  themeColor: '#2b3f86',
+}
+
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" className={`${dmSans.variable} ${fraunces.variable}`} suppressHydrationWarning>
       <head>
-        <meta charSet="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
             __html: JSON.stringify({
               '@context': 'https://schema.org',
               '@type': 'WebApplication',
-              name: 'Overstay Check',
-              url: 'https://overstaycheck.com',
-              description: 'US Visa Overstay Calculator - Check re-entry bans',
+              name: 'OverstayCheck US',
+              url: site.domain,
+              applicationCategory: 'UtilitiesApplication',
+              operatingSystem: 'Any',
+              description: 'Free US visa overstay calculator. Check unlawful presence and re-entry ban thresholds.',
+              offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
             }),
           }}
         />
-        {/* Google AdSense */}
-        <script
-          async
-          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=pub-8935274984783226"
-          crossOrigin="anonymous"
-        />
       </head>
-      <body className="bg-background text-foreground">
+      <body className="min-h-screen bg-background font-sans text-foreground antialiased">
+        <SiteHeader />
         {children}
+        <SiteFooter />
+        <ConsentScripts />
+        <Script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8935274984783226"
+          crossOrigin="anonymous"
+          strategy="afterInteractive"
+        />
       </body>
     </html>
   )

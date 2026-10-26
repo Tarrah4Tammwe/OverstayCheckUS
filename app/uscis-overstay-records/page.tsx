@@ -1,212 +1,120 @@
+import type { Metadata } from 'next'
+import Link from 'next/link'
+import { Callout } from '@/components/callout'
+import { GuideLayout } from '@/components/guide-layout'
+import { site } from '@/lib/site'
+
 export const metadata: Metadata = {
-  title: 'USCIS Overstay Records - Overstay Check',
-  description: 'How to check your USCIS records for overstay history. What information USCIS has about you.',
-  alternates: {
-    canonical: 'https://overstaycheck.com/uscis-overstay-records',
-  },
+  title: 'How to Check Your US Immigration Records',
+  description:
+    'Where your I-94 and travel history live, how to view them online, how to request your file with a FOIA request, and what to do if a record is wrong.',
+  alternates: { canonical: `${site.domain}/uscis-overstay-records` },
 }
 
-import type { Metadata } from 'next'
-
-
-import Link from 'next/link'
-import { ArrowLeft, AlertCircle } from 'lucide-react'
-
-export default function USCISRecordsPage() {
+export default function Page() {
   return (
-    <main className="min-h-screen bg-background">
-      <header className="border-b-2 border-secondary bg-card">
-        <div className="max-w-4xl mx-auto px-4 py-4">
-          <Link href="/" className="flex items-center gap-2 text-primary hover:underline mb-4">
-            <ArrowLeft className="h-4 w-4" />
-            Back to Calculator
-          </Link>
-          <h1 className="text-4xl font-bold text-secondary">USCIS Overstay Records</h1>
-        </div>
-      </header>
+    <GuideLayout
+      slug="uscis-overstay-records"
+      title="How to Check Your US Immigration Records"
+      description="Your I-94 history is online. Your full file can be requested by FOIA. Here is what each shows."
+      sources={[
+        { label: 'CBP: Official I-94 website', href: 'https://i94.cbp.dhs.gov' },
+        { label: 'USCIS: Request records (FOIA and Privacy Act)', href: 'https://www.uscis.gov/records/request-records-through-the-freedom-of-information-act-or-privacy-act' },
+        { label: 'CBP: Freedom of Information Act', href: 'https://www.cbp.gov/site-policy-notices/foia' },
+        { label: 'USCIS: Create or sign in to a USCIS online account', href: 'https://myaccount.uscis.dhs.gov' },
+      ]}
+    >
+      <p className="lede">
+        Several US agencies keep records about your travel and applications. Checking them yourself before you apply for
+        anything tells you what officers will see.
+      </p>
 
-      <article className="max-w-4xl mx-auto px-4 py-12">
-        <div className="prose prose-lg max-w-none">
-          <p className="text-lg text-muted-foreground mb-8">
-            Every time you enter or leave the US, it's recorded. Your overstay is documented forever. Here's what USCIS knows about you and how to check your own record.
-          </p>
+      <Callout tone="info" title="In short">
+        Use the <strong>CBP I-94 website</strong> to see your I-94 and recent travel history. Use{' '}
+        <strong>FOIA requests</strong> to get your full file. An overstay is not “deleted” from your history, but a bar
+        ends on its own timeline.
+      </Callout>
 
-          <h2 className="text-2xl font-bold text-secondary mt-10 mb-4">What records does USCIS keep?</h2>
-          <p>
-            USCIS and CBP (Customs and Border Protection) maintain:
-          </p>
+      <h2>Who holds which record</h2>
+      <ul>
+        <li>
+          <strong>CBP</strong> records your arrivals and departures and issues your I-94. This is where admission dates
+          and “Admit Until” dates come from.
+        </li>
+        <li>
+          <strong>USCIS</strong> holds records of applications you filed (for example extensions, petitions and
+          applications for status) and decisions on them.
+        </li>
+        <li>
+          <strong>The Department of State</strong> holds your visa applications and any refusals.
+        </li>
+        <li>
+          <strong>ICE and the immigration courts</strong> hold records related to enforcement and removal proceedings.
+        </li>
+      </ul>
 
-          <ul className="space-y-2 ml-4">
-            <li>• Every time you entered the US (date, port of entry, visa type)</li>
-            <li>• Every time you left the US (date, port of departure)</li>
-            <li>• Your I-94 record (including "Admit Until Date")</li>
-            <li>• Any visa applications or rejections</li>
-            <li>• Any green card applications</li>
-            <li>• Any overstays or unlawful presence</li>
-            <li>• Any deportation orders or re-entry bans</li>
-            <li>• Any criminal records</li>
-          </ul>
+      <h2>Check your I-94 and travel history</h2>
+      <ol>
+        <li>
+          Go to the official{' '}
+          <a href="https://i94.cbp.dhs.gov" target="_blank" rel="noopener noreferrer">CBP I-94 website</a>.
+        </li>
+        <li>Use “Get Most Recent I-94” to see your latest admission and “Admit Until” date.</li>
+        <li>Use the travel history option to see past entries and exits recorded by CBP.</li>
+      </ol>
+      <p>
+        If you left after your “Admit Until” date, the difference between that date and your departure date is the
+        period of overstay recorded. If your record is missing an exit, an exit may not have been captured and you may
+        need proof of departure, such as a boarding pass or passport stamp.
+      </p>
 
-          <p className="mt-6">
-            All of this is connected in one database. Agents at every border, consulate, and USCIS office can see it.
-          </p>
+      <h2>Your USCIS account</h2>
+      <p>
+        If you have filed applications with USCIS, you can see their status and notices in your USCIS online account.
+        That account shows your filings and case history. It is not a general “overstay report” and does not list your
+        CBP travel history.
+      </p>
 
-          <h2 className="text-2xl font-bold text-secondary mt-10 mb-4">How long does an overstay stay on your record?</h2>
-          <p>
-            Forever. There's no statute of limitations. A 5-day overstay from 20 years ago will still show up.
-          </p>
+      <h2>Request your full file with FOIA</h2>
+      <p>
+        You can ask each agency for the records it holds about you through the Freedom of Information Act (FOIA) or the
+        Privacy Act. USCIS handles requests for your immigration file, and CBP handles travel and inspection records.
+        Requests can take months, and each agency has its own instructions and identity-verification rules, so use the
+        official pages linked below.
+      </p>
 
-          <p>
-            You cannot request that USCIS remove or forget an overstay. It's part of your permanent immigration file.
-          </p>
+      <h2>If a record is wrong</h2>
+      <ol>
+        <li>Check the online record again and note exactly what is wrong.</li>
+        <li>
+          For a CBP admission or I-94 error, you can ask CBP to correct it, normally through a Deferred Inspection
+          office, with documents that prove the correct information.
+        </li>
+        <li>
+          If the error matters to a pending application, tell your attorney before filing. An error can sometimes be
+          explained with evidence in the application itself.
+        </li>
+      </ol>
 
-          <h2 className="text-2xl font-bold text-secondary mt-10 mb-4">How to check your own USCIS record</h2>
+      <h2>How long does an overstay stay on record?</h2>
+      <p>
+        There is no automatic deletion date for the record that you overstayed. But the legal <em>consequences</em> that
+        are time-limited do end: a 3-year or 10-year bar runs out. Questions on visa forms, however, often ask whether
+        you have <em>ever</em> overstayed, and you need to answer truthfully. For the specific rules, see the{' '}
+        <Link href="/unlawful-presence">unlawful presence guide</Link>.
+      </p>
 
-          <h3 className="text-xl font-bold text-secondary mt-8 mb-3">Method 1: I-94 Online (easiest)</h3>
-          <p>
-            Visit <a href="https://i94.cbp.dhs.gov" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">i94.cbp.dhs.gov</a> and search by your name and passport number.
-          </p>
+      <h2>Privacy</h2>
+      <p>
+        Your records are protected by privacy law. Government agencies can see them, you can request them, and an
+        attorney or representative can request them for you with your written consent. Family members cannot get them
+        without your permission.
+      </p>
 
-          <p>
-            You'll see:
-          </p>
-
-          <ul className="space-y-2 ml-4">
-            <li>• Your most recent I-94 arrival and departure records</li>
-            <li>• Your "Admit Until Date"</li>
-            <li>• Whether you overstayed (if it shows a departure date after your I-94 expiry, you overstayed)</li>
-          </ul>
-
-          <h3 className="text-xl font-bold text-secondary mt-8 mb-3">Method 2: USCIS My USCIS Account</h3>
-          <p>
-            Create an account at <a href="https://myaccount.uscis.dhs.gov" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">myaccount.uscis.dhs.gov</a>.
-          </p>
-
-          <p>
-            You can see:
-          </p>
-
-          <ul className="space-y-2 ml-4">
-            <li>• All your USCIS applications and petitions</li>
-            <li>• Your visa status</li>
-            <li>• Any pending cases</li>
-            <li>• Overstay notices (if issued)</li>
-          </ul>
-
-          <h3 className="text-xl font-bold text-secondary mt-8 mb-3">Method 3: Request via FOIA</h3>
-          <p>
-            You can request your full immigration file from USCIS using the Freedom of Information Act (FOIA).
-          </p>
-
-          <p>
-            This takes 2–6 months and you'll get everything: scans of documents, notes from agents, everything.
-          </p>
-
-          <p>
-            File a FOIA request at <a href="https://www.uscis.gov/foia" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">uscis.gov/foia</a>.
-          </p>
-
-          <h2 className="text-2xl font-bold text-secondary mt-10 mb-4">What if you can't find your I-94 record?</h2>
-          <p>
-            If the CBP.gov website doesn't show your record, you either:
-          </p>
-
-          <ul className="space-y-2 ml-4">
-            <li>• Never had one (you weren't admitted properly)</li>
-            <li>• Entered without inspection (illegal entry)</li>
-            <li>• Have an extremely old record (pre-2000s might not be online)</li>
-          </ul>
-
-          <p className="mt-6">
-            Contact CBP or an immigration attorney for help accessing old records.
-          </p>
-
-          <h2 className="text-2xl font-bold text-secondary mt-10 mb-4">Can you get an overstay removed from your record?</h2>
-          <p>
-            No. An overstay is a fact. It happened. USCIS will not erase it or pretend it didn't happen.
-          </p>
-
-          <p>
-            What you CAN do:
-          </p>
-
-          <ul className="space-y-2 ml-4">
-            <li>• File an I-601 waiver if you have family sponsorship (may waive the consequences)</li>
-            <li>• Document mitigating circumstances (medical emergency, abuse, etc.) for future cases</li>
-            <li>• Consult an attorney about your options</li>
-          </ul>
-
-          <div className="bg-blue-50 border-l-4 border-blue-500 p-6 my-8">
-            <div className="flex gap-3">
-              <AlertCircle className="h-6 w-6 text-blue-600 flex-shrink-0 mt-1" />
-              <div>
-                <p className="font-bold text-blue-900 mb-2">Important:</p>
-                <p className="text-blue-800">
-                  An overstay stays on your record even if you later married a US citizen or got a green card. It doesn't disappear. But a green card means you're no longer "overstayed" — you're now lawfully present.
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <h2 className="text-2xl font-bold text-secondary mt-10 mb-4">What if your record is wrong?</h2>
-          <p>
-            If you believe your I-94 record is incorrect (wrong dates, wrong visa type, etc.), you can:
-          </p>
-
-          <ol className="list-decimal list-inside space-y-3 ml-4">
-            <li>Contact CBP directly to request a review</li>
-            <li>File a FOIA request with supporting documents</li>
-            <li>Consult an immigration attorney if the error is significant</li>
-          </ol>
-
-          <p className="mt-6">
-            Corrections are rare and require solid proof that the record is wrong.
-          </p>
-
-          <h2 className="text-2xl font-bold text-secondary mt-10 mb-4">Can family members see your record?</h2>
-          <p>
-            No. Your USCIS record is confidential. Only:
-          </p>
-
-          <ul className="space-y-2 ml-4">
-            <li>• You</li>
-            <li>• An immigration attorney you authorize</li>
-            <li>• USCIS and CBP agents</li>
-            <li>• A family member you give explicit permission to</li>
-          </ul>
-
-          <p className="mt-6">
-            Don't assume your family knows about your overstay unless you told them.
-          </p>
-
-          <h2 className="text-2xl font-bold text-secondary mt-10 mb-4">Bottom line</h2>
-          <p>
-            Your overstay is recorded and permanent. Check your own record via i94.cbp.dhs.gov to confirm. Don't be surprised if you see it — it means CBP caught it at the border. If you're planning future US immigration, know that this overstay will come up. Plan accordingly.
-          </p>
-
-          <div className="bg-orange-50 border-l-4 border-orange-500 p-6 my-8">
-            <div className="flex gap-3">
-              <AlertCircle className="h-6 w-6 text-orange-600 flex-shrink-0 mt-1" />
-              <div>
-                <p className="font-bold text-orange-900 mb-2">Before future applications:</p>
-                <p className="text-orange-800">
-                  Always check your record before applying for visas, jobs requiring background checks, or anything tied to immigration. Know what USCIS knows about you.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <nav className="border-t-2 border-secondary mt-12 pt-8">
-          <p className="text-sm text-muted-foreground mb-4">Related guides:</p>
-          <ul className="space-y-2">
-            <li><Link href="/what-is-i94" className="text-primary hover:underline">→ What is an I-94 Visa?</Link></li>
-            <li><Link href="/unlawful-presence" className="text-primary hover:underline">→ Unlawful Presence vs. Overstay</Link></li>
-            <li><Link href="/airport-immigration-check" className="text-primary hover:underline">→ Airport Immigration Check</Link></li>
-            <li><Link href="/" className="text-primary hover:underline font-semibold">→ Back to Calculator</Link></li>
-          </ul>
-        </nav>
-      </article>
-    </main>
+      <Callout tone="warning" title="Not legal advice">
+        Check your own records before any application or trip, and keep copies of your documents. If something looks
+        wrong or worrying, speak to an immigration attorney.
+      </Callout>
+    </GuideLayout>
   )
 }

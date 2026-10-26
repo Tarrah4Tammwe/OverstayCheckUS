@@ -1,208 +1,105 @@
+import type { Metadata } from 'next'
+import Link from 'next/link'
+import { Callout } from '@/components/callout'
+import { GuideLayout } from '@/components/guide-layout'
+import { site } from '@/lib/site'
+
 export const metadata: Metadata = {
-  title: 'TPS Status and Overstay - Overstay Check',
-  description: 'Can you overstay while on TPS? What happens to your overstay when TPS expires.',
-  alternates: {
-    canonical: 'https://overstaycheck.com/tps-status-overstay',
-  },
+  title: 'TPS and Unlawful Presence: What Counts',
+  description:
+    'Time with Temporary Protected Status is not unlawful presence, but time before and after is. How TPS interacts with overstay, travel and the bars.',
+  alternates: { canonical: `${site.domain}/tps-status-overstay` },
 }
 
-import type { Metadata } from 'next'
-
-
-import Link from 'next/link'
-import { ArrowLeft, AlertCircle } from 'lucide-react'
-
-export default function TPSStatusPage() {
+export default function Page() {
   return (
-    <main className="min-h-screen bg-background">
-      <header className="border-b-2 border-secondary bg-card">
-        <div className="max-w-4xl mx-auto px-4 py-4">
-          <Link href="/" className="flex items-center gap-2 text-primary hover:underline mb-4">
-            <ArrowLeft className="h-4 w-4" />
-            Back to Calculator
-          </Link>
-          <h1 className="text-4xl font-bold text-secondary">TPS Status and Overstay</h1>
-        </div>
-      </header>
+    <GuideLayout
+      slug="tps-status-overstay"
+      title="TPS and Overstay"
+      description="Temporary Protected Status stops unlawful presence from accruing while it is in effect, but it does not erase days counted before or after."
+      sources={[
+        { label: 'USCIS: Temporary Protected Status (current designations and rules)', href: 'https://www.uscis.gov/humanitarian/temporary-protected-status' },
+        { label: '8 U.S.C. §1254a: Temporary Protected Status', href: 'https://www.law.cornell.edu/uscode/text/8/1254a' },
+        { label: '8 U.S.C. §1182(a)(9)(B): unlawful presence bars', href: 'https://www.law.cornell.edu/uscode/text/8/1182' },
+      ]}
+    >
+      <p className="lede">
+        Temporary Protected Status (TPS) protects people from deportation and allows work authorization while their
+        country’s designation lasts. It also changes how unlawful presence is counted, in a way that is easy to get
+        wrong.
+      </p>
 
-      <article className="max-w-4xl mx-auto px-4 py-12">
-        <div className="prose prose-lg max-w-none">
-          <p className="text-lg text-muted-foreground mb-8">
-            If you have Temporary Protected Status (TPS), the I-94 overstay rules don't work the same way. TPS can pause the clock on unlawful presence — even if your regular I-94 has already expired.
-          </p>
+      <Callout tone="info" title="In short">
+        While you have TPS, time does <strong>not</strong> count as unlawful presence. Days you accrued <em>before</em>{' '}
+        TPS still count, and counting can <strong>resume</strong> when TPS ends if you have no other status.
+      </Callout>
 
-          <h2 className="text-2xl font-bold text-secondary mt-10 mb-4">What is TPS?</h2>
-          <p>
-            Temporary Protected Status is a special immigration benefit. It allows people from certain countries to stay and work in the US legally, even if they don't have a visa.
-          </p>
+      <h2>What TPS is</h2>
+      <p>
+        TPS is a temporary status the US government can give to nationals of a country that is affected by armed
+        conflict, a natural disaster or other extraordinary conditions. People must apply, show they meet the
+        requirements, and be registered during the designated period. A designation is for a fixed period set by the
+        government. It can be extended, or it can be ended.
+      </p>
+      <p>
+        Which countries are designated, their deadlines and whether a designation has been extended or terminated change
+        often and are sometimes affected by court cases. Always check the current notice on the{' '}
+        <a href="https://www.uscis.gov/humanitarian/temporary-protected-status" target="_blank" rel="noopener noreferrer">USCIS TPS page</a>{' '}
+        rather than an old list.
+      </p>
 
-          <p>
-            TPS is usually granted when:
-          </p>
+      <h2>How TPS affects unlawful presence</h2>
+      <p>
+        By law, a person with TPS is treated as being in lawful temporary status for the period of TPS and does not
+        accrue unlawful presence during that time. This applies even if your original I-94 expired earlier.
+      </p>
+      <p><strong>Example.</strong></p>
+      <ul>
+        <li>Your I-94 expires on June 1. You do nothing. You accrue unlawful presence from June 2.</li>
+        <li>On September 15 (106 days later) you are granted TPS. The count stops at 106 days.</li>
+        <li>You keep TPS for two years. No new days are added.</li>
+        <li>
+          TPS ends and you have no other status. Counting <strong>resumes from 106 days</strong>. You reach the 3-year
+          bar range after 75 more days (181 total), and the 10-year bar range at 365 total.
+        </li>
+      </ul>
+      <p>
+        The days before TPS are not forgiven. They sit in the background and become relevant again when protection ends.
+      </p>
 
-          <ul className="space-y-2 ml-4">
-            <li>• A country has civil war, natural disaster, or epidemic</li>
-            <li>• The US government says it's too dangerous to send people back</li>
-            <li>• Citizens of that country are already in the US</li>
-          </ul>
+      <h2>When TPS ends</h2>
+      <p>
+        When a designation ends, the government publishes a notice with an effective date and what people may do next.
+        If you have no other status on that date, you may start to accrue unlawful presence again, and you may be
+        subject to removal.
+      </p>
+      <p>Options people explore with an attorney include:</p>
+      <ul>
+        <li>A different immigration status for which you qualify, such as through an employer or a family member.</li>
+        <li>Adjustment of status if you qualify, for example as an immediate relative of a US citizen.</li>
+        <li>Asylum or other protection, if you fear return.</li>
+        <li>Planning departure with an understanding of which bar, if any, would apply.</li>
+      </ul>
 
-          <p className="mt-6">
-            Countries with TPS (2026): Syria, Yemen, South Sudan, Somalia, Myanmar, El Salvador, Honduras, Nicaragua, Sudan, Ukraine, Afghanistan, Cameroon, and others. The list changes.
-          </p>
+      <h2>Travelling on TPS</h2>
+      <p>
+        Leaving the US without permission can end your TPS protection and affect your ability to return. If you need to
+        travel, you generally need <strong>travel authorization (advance parole)</strong> approved before you leave. Even
+        with advance parole, entry is not guaranteed. Speak to an attorney first.
+      </p>
 
-          <h2 className="text-2xl font-bold text-secondary mt-10 mb-4">How does TPS affect overstay?</h2>
+      <h2>Does TPS lead to a green card?</h2>
+      <p>
+        No. TPS is temporary and does not itself lead to permanent residence. Some TPS holders qualify through another
+        route, such as a family relationship, but how TPS interacts with those routes depends on how and when you
+        entered and on court decisions. This is a technical area where individual advice matters.
+      </p>
 
-          <div className="bg-blue-50 border-l-4 border-blue-500 p-6 my-8">
-            <div className="flex gap-3">
-              <AlertCircle className="h-6 w-6 text-blue-600 flex-shrink-0 mt-1" />
-              <div>
-                <p className="font-bold text-blue-900 mb-2">Key rule:</p>
-                <p className="text-blue-800">
-                  If you have TPS, unlawful presence doesn't accrue. That means even if your I-94 expired years ago, you're not building up overstay days.
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <p>
-            Here's the scenario:
-          </p>
-
-          <p>
-            Your I-94 expired on June 1, 2023. You didn't file an extension. Normally, after 180 days of overstay, you'd face a 3-year re-entry ban when you left.
-          </p>
-
-          <p>
-            But on September 15, 2023, your country got TPS designation, and you applied and were approved.
-          </p>
-
-          <p>
-            Now: The overstay clock stopped. As long as you maintain TPS status, those months of overstay don't count. No re-entry ban will apply when you leave — because you weren't unlawfully present while TPS was in effect.
-          </p>
-
-          <h2 className="text-2xl font-bold text-secondary mt-10 mb-4">But what if TPS ends?</h2>
-          <p>
-            TPS doesn't last forever. The government re-designates it every 6–18 months. It can end.
-          </p>
-
-          <p>
-            <strong>Scenario: TPS is terminated</strong>
-          </p>
-
-          <p>
-            Your TPS designation ends on July 1, 2026. You have 90 days to decide: file for something else, or prepare to leave.
-          </p>
-
-          <p>
-            If you stay in the US after July 1 without a new status, the overstay clock <em>resumes</em> from where it left off. If you were overstayed 200 days before TPS, and TPS lasted 2 years, now your counter is ticking again — and you're in the 3-year ban zone.
-          </p>
-
-          <p>
-            That's why it's critical to prepare <em>before</em> TPS ends.
-          </p>
-
-          <h2 className="text-2xl font-bold text-secondary mt-10 mb-4">What are your options if TPS is ending?</h2>
-
-          <h3 className="text-xl font-bold text-secondary mt-8 mb-3">Option 1: Apply for a different status</h3>
-          <p>
-            If you're eligible for another visa (work visa, family-based, diversity visa, etc.), you can apply before TPS ends.
-          </p>
-
-          <p>
-            Common options:
-          </p>
-
-          <ul className="space-y-2 ml-4">
-            <li>• H-1B (work visa) — if your employer sponsors you</li>
-            <li>• Diversity visa — if you win the lottery</li>
-            <li>• Family-based visa — if a relative petitions for you</li>
-            <li>• Student visa (F-1) — if you enrol at a school</li>
-            <li>• Asylum or withholding of removal — if you face persecution</li>
-          </ul>
-
-          <p className="mt-6">
-            Ask an immigration attorney which applies to you.
-          </p>
-
-          <h3 className="text-xl font-bold text-secondary mt-8 mb-3">Option 2: File for deferred action</h3>
-          <p>
-            If you've been on TPS for years and have ties to the US (family, job, community), you might be able to apply for deferred action (also called prosecutorial discretion). This is discretionary — not guaranteed — but it keeps you in the US while your case is reviewed.
-          </p>
-
-          <h3 className="text-xl font-bold text-secondary mt-8 mb-3">Option 3: Leave the US voluntarily</h3>
-          <p>
-            If no other status is available, the safest option is to leave before TPS ends. This stops the overstay clock before it resumes. You avoid triggering re-entry bans.
-          </p>
-
-          <p>
-            If you've already overstayed significantly, leaving early might be worth it.
-          </p>
-
-          <h2 className="text-2xl font-bold text-secondary mt-10 mb-4">Does TPS give you a green card?</h2>
-          <p>
-            No. TPS is temporary. It doesn't lead directly to permanent residency (green card) unless you have another path — like marriage to a US citizen, or an employer sponsoring you.
-          </p>
-
-          <p>
-            Many TPS holders have been waiting 20+ years for a permanent solution. TPS is protection, not a pathway.
-          </p>
-
-          <h2 className="text-2xl font-bold text-secondary mt-10 mb-4">Can you travel while on TPS?</h2>
-          <p>
-            Yes, but carefully. You need:
-          </p>
-
-          <ul className="space-y-2 ml-4">
-            <li>• Valid advance parole document (travel permit)</li>
-            <li>• Valid passport from your country</li>
-            <li>• Often a re-entry permit</li>
-          </ul>
-
-          <p className="mt-6">
-            Without advance parole, leaving the US cancels your TPS protection. You'll likely be unable to re-enter.
-          </p>
-
-          <p>
-            If you need to travel, apply for advance parole before you leave.
-          </p>
-
-          <h2 className="text-2xl font-bold text-secondary mt-10 mb-4">Do you need an attorney?</h2>
-          <p>
-            Yes. TPS cases are fact-specific, and the rules change regularly. Especially as TPS designations end, you need someone to understand your options.
-          </p>
-
-          <p>
-            The stakes are high: if TPS ends and you have no backup status, you'll accrue overstay again — and potentially face re-entry bans.
-          </p>
-
-          <h2 className="text-2xl font-bold text-secondary mt-10 mb-4">Bottom line</h2>
-          <p>
-            TPS protects you from overstay accumulation while it's active. But it's temporary. Start planning your next step 6 months before your TPS designation ends. Talk to an attorney about work visas, family sponsorship, or other permanent options.
-          </p>
-
-          <div className="bg-orange-50 border-l-4 border-orange-500 p-6 my-8">
-            <div className="flex gap-3">
-              <AlertCircle className="h-6 w-6 text-orange-600 flex-shrink-0 mt-1" />
-              <div>
-                <p className="font-bold text-orange-900 mb-2">Important:</p>
-                <p className="text-orange-800">
-                  TPS law is complex and changes frequently. This is general information only. Consult a qualified immigration attorney before making decisions.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <nav className="border-t-2 border-secondary mt-12 pt-8">
-          <p className="text-sm text-muted-foreground mb-4">Related guides:</p>
-          <ul className="space-y-2">
-            <li><Link href="/what-is-i94" className="text-primary hover:underline">→ What is an I-94 Visa?</Link></li>
-            <li><Link href="/unlawful-presence" className="text-primary hover:underline">→ Unlawful Presence vs. Overstay</Link></li>
-            <li><Link href="/appeal-reentry-ban" className="text-primary hover:underline">→ Appealing a Re-Entry Ban</Link></li>
-            <li><Link href="/" className="text-primary hover:underline font-semibold">→ Back to Calculator</Link></li>
-          </ul>
-        </nav>
-      </article>
-    </main>
+      <Callout tone="warning" title="Get individual advice">
+        TPS law changes quickly and the rules for each country differ. This is general information only. Speak to a
+        qualified immigration attorney or accredited representative. See also{' '}
+        <Link href="/unlawful-presence">unlawful presence</Link> and the <Link href="/">calculator</Link>.
+      </Callout>
+    </GuideLayout>
   )
 }
